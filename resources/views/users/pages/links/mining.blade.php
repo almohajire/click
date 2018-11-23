@@ -1,58 +1,21 @@
 @extends('users.layouts.app')
+<link href="{{ asset('users/css2/test.css') }}" rel="stylesheet">
 
 @section('content')
 
 
+ @foreach($links as $link)
+    <div id="blue-box">
 
-<div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                BASIC TABLES
-                                <small>Basic example without any additional modification classes</small>
-                            </h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Link</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($links as $link)
-
-                                    <tr>
-                                        <th scope="row">#</th>
-                                        <td><a href="{{ $link->link}}" target="_blank">{{ $link->link}}</a></td>
-
-                                    </tr>
-
-                                    @endforeach
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+        <div class="website_block" id="1">
+            <div class="website_title">AdFly 1</div>
+                <span class="fa-stack fa-3x fa-lg"><i class="fa fa-square fa-stack-2x text-info"></i><i class="fa fa-money fa-stack-1x text-white"></i>
+                </span>
+                <div class="coins"><b>Reward</b>: <span>9 coins</span></div>
+        <a href="{{ $link->link}}" onclick="ModulePopup('1','{{ $link->link}}','Skip Ad');" class="visit_button">Visit</a><div class="x-small-circle-or">or</div><a href="javascript:void(0);" onclick="skipuser('1');" class="skip_button">skip</a>
+        <div class="website_bottom"><a href="javascript:void(0);" onclick="report_page('1','aHR0cDovL3N3aWZ0dG9waWEuY29tLzRIUHE=','ad_short');">Report</a></div>
+         </div>
+    </div>
+    @endforeach
 
 @endsection
