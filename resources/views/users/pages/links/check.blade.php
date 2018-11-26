@@ -1,9 +1,14 @@
 @extends('users.layouts.app')
+
+
 @section('content')
+
+
+
 
 <div class="container-fluid">
             <div class="block-header">
-                <h2>Add link</h2>
+                <h2>Add codegen</h2>
             </div>
 
 
@@ -14,12 +19,8 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Short This Link <small>{{ route('links.detect', $hash) }}</small>
+                                Short This Link <small></small>
 
-                                <button class="btn btn-info copy"  data-clipboard-text="{{ route('links.detect', $hash) }}">
-									    Copy to clipboard to shrink link
-								</button>
-                                
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -43,7 +44,7 @@
 	                                <div class="col-sm-12">
 	                                    <div class="form-group">
 	                                        <div class="form-line">
-	                                            <input type="text" name="link" class="form-control" placeholder="url.com" id="link">
+	                                            <input type="text" name="codegen" class="form-control" placeholder="codegen" id="codegen">
 	                                        </div>
 	                                    </div>
 
@@ -84,15 +85,26 @@
 
 
         </div>
+
+
+
+
+
+
+
 @endsection
 
 
 @section('scripts')
-	<script src="{{ asset('js/axios/axios.min.js') }}"></script>
+
+<script src="{{ asset('js/axios/axios.min.js') }}"></script>
 
 	<script src="{{ asset('js/validate/validate.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/clipboard/clipboard.min.js') }}"></script>
+
 	<script type="text/javascript">
+
+		console.log( 
+			history);
 
 		var $form = $('#form');
 		var $submit = $('#submit');
@@ -101,23 +113,16 @@
 
 
 
-
-
-
-		new ClipboardJS('.copy');
-
-
-
 		$submit.on('click',function(e){
 			e.preventDefault();
 			if( $form.valid() ){
 
-				axios.post('/link/store',{
+				axios.post('/link/check/{{ Auth::id() }}/{{ $link->id }}',{
                         headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        link: $('#link').val(),
-                        hash: '{{ $hash }}'
+                        codegen: $('#codegen').val()
+                        
                         }).then(function(success){
 
                         	var data = success.data;
@@ -126,7 +131,7 @@
 
 							swal(
 								'Good',
-								'Link added',
+								'++++++',
 								'success'
 
 							);
@@ -157,4 +162,7 @@
 
 		
 	</script>
+
+
+
 @endsection

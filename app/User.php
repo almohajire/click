@@ -14,7 +14,8 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'number_click', 'number_clicked', 'role'
+        'name', 'email', 'password', 'number_click', 'number_clicked',
+        'role'
     ];
 
     /**
@@ -26,9 +27,19 @@ class User extends \TCG\Voyager\Models\User
         'password', 'remember_token',
     ];
 
+
     public function links(){
         return $this->hasMany('App\Link');
     }
+
+    public function ads(){
+        return $this->hasMany('App\Ad');
+    }
+
+    public function discoverdLinks(){
+        return $this->belongsToMany('App\Link')->withPivot('codegen');
+    }
+
 
     public function getIsAdminAttribute() {
             return $this->role >= 0;

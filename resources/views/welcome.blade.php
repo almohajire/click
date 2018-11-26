@@ -3,7 +3,16 @@
 
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
-    <a href="{{ route('login') }}" target="_blank">{{ __('Login') }}</a>
+    @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}" style="text-decoration: none">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" style="text-decoration: none">Login</a>
+                        <a href="{{ route('register') }}" style="text-decoration: none">Register</a>
+                    @endauth
+                </div>
+            @endif
   </div>
   <div class="w3-display-middle">
     <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>

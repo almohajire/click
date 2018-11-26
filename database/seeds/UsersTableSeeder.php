@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Role;
 use TCG\Voyager\Models\User;
 
+
+use App\User as Usernormal;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -15,6 +18,9 @@ class UsersTableSeeder extends Seeder
     {
 
 
+        
+
+/*
 
         if (User::count() == 0) {
             $role = Role::where('name', 'admin')->firstOrFail();
@@ -27,5 +33,54 @@ class UsersTableSeeder extends Seeder
                 'role_id'        => $role->id,
             ]);
         }
+
+*/
+        Usernormal::create([
+
+                'name'           => 'User',
+                'email'          => 'user@user.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 0
+            ]);
+
+        Usernormal::create([
+
+                'name'           => 'User1',
+                'email'          => 'user1@user.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 0
+            ]);
+
+        Usernormal::create([
+
+                'name'           => 'User2',
+                'email'          => 'user2@user.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 0
+            ]);
+
+        Usernormal::create([
+
+                'name'           => 'User3',
+                'email'          => 'user3@user.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 0
+            ]);
+
+        Usernormal::create([
+
+                'name'           => 'User4',
+                'email'          => 'user4@user.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 0
+            ]);
+
+
+
     }
 }

@@ -5,8 +5,8 @@
                     <img src="{{ asset('users/images/user.png') }}" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
+                    <div class="email">{{ Auth::user()->email }}</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -32,20 +32,26 @@
                             <span>Home</span>
                         </a>
                     </li>
+
+                    @if( Auth::user()->number_click >= 2 )
+
                     <li>
-                        <a href="/link/add">
+                        <a href="{{ route('links.add') }}">
                             <i class="material-icons">link</i>
                             <span>Add Link</span>
                         </a>
                     </li>
+
+                    @endif
+
                     <li>
-                        <a href="/link/mine">
+                        <a href="{{ route('links.mine') }}">
                             <i class="material-icons">link</i>
-                            <span>My Link</span>
+                            <span>My Links</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/link/mining">
+                        <a href="{{ route('links.mining') }}">
                             <i class="material-icons">local_atm</i>
                             <span>Mining</span>
                         </a>

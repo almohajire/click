@@ -19,11 +19,14 @@ class CreateLinksTable extends Migration
 
 
             $table->increments('id');
-            $table->string('link');
+            $table->string('link')->unique();
             $table->integer('clicked')->default(0);
             $table->boolean('confirmed')->default(false);
-            
+            $table->string('hash')->unique();
+            //$table->string('ip');
             $table->integer('user_id')->index()->insigned();
+
+            
             /*
             $table->foreign('user_id')
               ->references('id')
