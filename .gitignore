@@ -13,3 +13,6 @@ yarn-error.log
 .env
 .phpunit.result.cache
 public/users/css2/test.css
+storage/framework/cache/data/6f/d3/6fd393ce077696e27dd00aca675958e354e81173
+storage/framework/cache/data/0f/f7/0ff70eca6cec7e8c0aa56acfecce4bbc346e57aa
+storage/framework/cache/data/9a/64/9a644fe801096d4d3732aae0c1fd3a9ec0064bf5
