@@ -25,4 +25,7 @@
 @endsection
 
 
-{{ $link->links }}
+@if( count( $links ) > 0 )
+    {{ $links->links() }}
+@endif
+

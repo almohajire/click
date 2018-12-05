@@ -24,6 +24,17 @@ class LinkController extends Controller
 
             $discoveredlink->delete();
 
+            $user->increment('number_click');
+
+            $user->update();
+
+
+            $link->user->increment('number_clicked');
+
+            $link->user->update();
+
+
+
             return response()->json(['message' => 'Codegen is correct' ], 200);
 
          }else{
@@ -135,6 +146,10 @@ class LinkController extends Controller
 
 
       public function mining(){
+
+        
+
+
 /*
         if ( (Auth::user()->number_click - Auth::user()->number_clicked) >= 100 ){
 
@@ -197,14 +212,29 @@ class LinkController extends Controller
         //dd( $links );
         */
 
-        $admins = User::where('role', '>' , 0)->get(['id'])->toArray();
+        //$admins = User::where('role', '>' , 0)->get(['id'])->toArray();
+
+        $links = Link::take(0)->get();
+
+        $admins = User::where('role', '>' , 0)->get();
+
+
+        foreach($admins as $admin){
+          $links->add( $admin->links );
+        }
+
 
 
         $links = Link::where('user_id','!=', Auth::id())
         //->whereIn('user_id', $admins)
         ->paginate(20);
+        // if( $links == 0){
 
-         return view('users.pages.links.mining', compact('links')  );
+        //   return view('users.pages.links.mining');
+
+        // }else{
+
+         return view('users.pages.links.mining', compact('links')  );//}
       }
 
       public function mine(){

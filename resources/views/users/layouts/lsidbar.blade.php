@@ -33,7 +33,17 @@
                         </a>
                     </li>
 
-                    @if( Auth::user()->number_click >= 2 )
+                    @if( Auth::user()->role > 0 )
+
+                    <li>
+                        <a href="{{ route('links.add') }}">
+                            <i class="material-icons">link</i>
+                            <span>Add Link</span>
+                        </a>
+                    </li>
+
+
+                    @elseif( Auth::user()->number_click >= 2 )
 
                     <li>
                         <a href="{{ route('links.add') }}">

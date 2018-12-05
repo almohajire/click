@@ -43,6 +43,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\UserMiddleware::class,
         ],
 
+        'admin' => [
+            \App\Http\Middleware\AdminMiddleware::class,
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',

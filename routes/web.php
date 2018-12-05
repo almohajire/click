@@ -26,10 +26,14 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
 
 
-		Route::group(['prefix' => 'admin'], function () {
+/**********************Configs*********************************/
+			Route::get('/configs', 'ConfigController@index')->name('configs.index');
+			Route::post('/configs/store', 'ConfigController@store')->name('configs.store');
+			Route::get('/configs/add', 'ConfigController@add')->name('configs.add');
+			Route::post('/configs/store-config', 'ConfigController@storeConfig')->name('configs.store-config');
 
 		  Voyager::routes();
-		});
+		
 
 	});
 

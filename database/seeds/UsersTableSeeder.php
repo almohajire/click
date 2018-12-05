@@ -35,6 +35,17 @@ class UsersTableSeeder extends Seeder
         }
 
 */
+
+        Usernormal::create([
+
+                'name'           => 'Admin',
+                'email'          => 'admin@admin.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 1
+            ]);
+
+
         Usernormal::create([
 
                 'name'           => 'User',

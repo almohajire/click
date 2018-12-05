@@ -14,3 +14,11 @@ Khouna li hay7at lina lien
 
 
 awal 7aja -> y7atlina lien li
+
+
+
+--------------------GOOD CODE
+
+
+
+php artisan voyager:admin your@email.com --creat
