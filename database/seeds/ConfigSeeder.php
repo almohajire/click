@@ -157,14 +157,14 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'no-image',
             'nameSetting' => 'No image',
-            'value' => 'no-image.jpg',
+            'value' => 'no-image.png',
             'type' => 'file',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         DB::table('configs')->insert([
             'slug' => 'logo',
             'nameSetting' => 'Logo',
-            'value' => '1535440397_logo.png',
+            'value' => 'logo.jpg',
             'type' => 'file',
             'created_at' => date('Y-m-d H:i:s'),
         ]);

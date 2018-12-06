@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Welcome To | Bootstrap Based Admin Template - Material Design</title>
+    <title>{{ GetSetting::getConfig('site-name') }} | Bootstrap Based Admin Template - Material Design</title>
     <!-- Favicon-->
     <link rel="icon" href="{{ asset('users/favicon.ico') }}" type="image/x-icon">
 
@@ -81,6 +81,10 @@
     <section class="content">
         @yield('content')
     </section>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+@csrf
+</form>
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('users/plugins/jquery/jquery.min.js') }}"></script>

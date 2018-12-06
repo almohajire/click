@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 
-use App\{User, Link, Ad};
+use App\{User, Link, Ad, Clicklink};
 use Auth;
 
 use Session;
@@ -18,21 +18,34 @@ class LinkController extends Controller
 
          $codegen = $request->codegen;
 
-         $discoveredlink = $user->discoverdLinks()->first();
+         //Hna fin ymkan ykoun mchkiil
+
+         $discoveredlink = $user->discoverdLinks()->where('link_id', $link->id)->first();
+
+
+         if( $discoveredlink ){
+
+          //dd( $discoveredlink->pivot->codegen , $codegen );
+
 
          if( $discoveredlink->pivot->codegen == $codegen){
 
-            $discoveredlink->delete();
+            //dd($discoveredlink->pivot->id);
+            //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
 
-            $user->increment('number_click');
+            $clicklink = Clicklink::findOrFail( $discoveredlink->pivot->id );
 
-            $user->update();
+            $clicklink->delete();
+
+            $user->number_click = $user->number_click ++ ;
+
+            $user->save();
 
 
-            $link->user->increment('number_clicked');
+            $link->user->number_clicked = $link->user->number_clicked ++ ;
 
-            $link->user->update();
 
+            $link->user->save();
 
 
             return response()->json(['message' => 'Codegen is correct' ], 200);
@@ -42,22 +55,22 @@ class LinkController extends Controller
             return response()->json(['message' => 'Not stored succefully because of codegen' ], 500);
 
          }
+
+
+
+
+
+
+
+         }else{
+
+            return response()->json(['message' => 'Not stored succefully because of link' ], 500);
+
+         }
+
    
          
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -214,18 +227,20 @@ class LinkController extends Controller
 
         //$admins = User::where('role', '>' , 0)->get(['id'])->toArray();
 
+        $linkClicked = Clicklink::onlyTrashed()->where('user_id', Auth::id() )->get(['link_id'])->toArray();
+
         $links = Link::take(0)->get();
 
         $admins = User::where('role', '>' , 0)->get();
 
 
         foreach($admins as $admin){
-          $links->add( $admin->links );
+          $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
         }
 
 
 
-        $links = Link::where('user_id','!=', Auth::id())
+        $links = Link::where('user_id','!=', Auth::id())->whereNotIn('id', $linkClicked )
         //->whereIn('user_id', $admins)
         ->paginate(20);
         // if( $links == 0){
@@ -275,7 +290,7 @@ class LinkController extends Controller
 
       public function add(){
 
-
+        // Giving an Hash
          $hash = $this->detect();
 
 

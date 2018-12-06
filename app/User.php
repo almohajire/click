@@ -37,7 +37,7 @@ class User extends \TCG\Voyager\Models\User
     }
 
     public function discoverdLinks(){
-        return $this->belongsToMany('App\Link')->withPivot('codegen');
+        return $this->belongsToMany('App\Link')->withPivot('codegen', 'id');
     }
 
 

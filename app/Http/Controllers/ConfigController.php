@@ -1,11 +1,10 @@
-
 <?php
 namespace App\Http\Controllers;
 use App\Config;
 use Illuminate\Http\Request;
 use App\Helpers\Common\Pics;
 use File;
-use App\Year;
+
 class ConfigController extends Controller
 {
     /**
@@ -17,7 +16,7 @@ class ConfigController extends Controller
     {
         //
         $configs = Config::all();
-        return view('back.config.index', compact('configs'));
+        return view('application.config.index', compact('configs'));
     }
     /**
      * Show the form for creating a new resource.
@@ -26,8 +25,8 @@ class ConfigController extends Controller
      */
     public function add()
     {
-        //
-        return view('back.config.add');
+        
+        return view('application.config.add');
     }
     /**
      * Store a newly created resource in storage.
@@ -37,8 +36,11 @@ class ConfigController extends Controller
      */
     public function storeConfig(Request $request, Config $config)
     {
-        //
-        Config::create( $request->all() );
+        $array = $request->all();
+
+        $array['slug'] = str_slug($request->nameSetting, '-');
+
+        Config::create( $array );
     }
     /**
      * Show the form for creating a new resource.
@@ -99,45 +101,5 @@ class ConfigController extends Controller
          }
         return back();
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Config  $config
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Config $config)
-    {
-        //
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Config  $config
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Config $config)
-    {
-        //
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Config  $config
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Config $config)
-    {
-        //
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Config  $config
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Config $config)
-    {
-        //
-    }
+
 }

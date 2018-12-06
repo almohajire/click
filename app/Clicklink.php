@@ -22,13 +22,13 @@ class Clicklink extends Model
 
     public function user(){
 
-    	$this->belognsTo('App\User');
+    	$this->belongsTo('App\User');
 
     }
 
     public function link(){
 
-    	$this->belognsTo('App\Link');
+    	$this->belongsTo('App\Link');
 
     }
 

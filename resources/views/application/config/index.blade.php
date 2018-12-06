@@ -4,7 +4,7 @@
 
 {!! Form::open(['route' => 'configs.store', 'files' => true, 'method' => 'post' ,'class' => 'form-horizontal']) !!}
 
-@component('back.components.plain')
+@component('components.plain')
 
   @slot('titlePlain')
 
@@ -20,26 +20,26 @@ The Main Configuration Of the web application
 
 
 
-			{!! Form::token() !!}
+      {!! Form::token() !!}
 
-			@php
-				$count = 0;
-			@endphp
+      @php
+        $count = 0;
+      @endphp
 
 
-			@foreach($configs as $config)
+      @foreach($configs as $config)
 
-			  	@php
-			  		$name = $config->slug;
+          @php
+            $name = $config->slug;
                     $for = $config->slug;
-			  		$textLabel = $config->nameSetting;
-			  		$required = false;
+            $textLabel = $config->nameSetting;
+            $required = false;
                     $class = 'form-control'
-			  		
-			  	@endphp
+            
+          @endphp
 
 
-				@include('back.partials.formGopen', compact('name', 'required', 'for', 'textLabel'))
+        @include('partials.formGopen', compact('name', 'required', 'for', 'textLabel'))
 
 
 
@@ -82,7 +82,7 @@ The Main Configuration Of the web application
 
                     @elseif( $config->type == 'file' )
 
-                    	{!! Form::file($config->slug, null , ['class' => 'form-control']) !!}
+                      {!! Form::file($config->slug, null , ['class' => 'form-control']) !!}
 
                         <div class="text-center">
 
@@ -109,32 +109,32 @@ The Main Configuration Of the web application
 
 
 
-				@include('back.partials.formGend')
+        @include('partials.formGend')
 
 
-				@php
-					$count++;
-				@endphp
+        @php
+          $count++;
+        @endphp
 
 
-			@endforeach
-			
-
-
-
+      @endforeach
+      
 
 
 
 
 
-  	  
+
+
+
+      
 
   @endslot
 
 
   @slot('footerPlain')
 
-            @component('back.components.button')
+            @component('components.button')
 
               @slot('value')
 

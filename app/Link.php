@@ -15,7 +15,7 @@ class Link extends Model
 
 
     public function discoverdByMany(){
-        return $this->belongsToMany('App\User')->withPivot('codegen');
+        return $this->belongsToMany('App\User')->withPivot('codegen', 'id');
     }
 
 }
