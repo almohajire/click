@@ -32,7 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/configs/add', 'ConfigController@add')->name('configs.add');
 			Route::post('/configs/store-config', 'ConfigController@storeConfig')->name('configs.store-config');
 
-		  Voyager::routes();
 		
 
 	});

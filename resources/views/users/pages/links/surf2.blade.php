@@ -21,7 +21,8 @@
 	<script type="text/javascript">
 
 		$('.copy').hide();
-		new ClipboardJS('.copy');
+		var clipboard = new ClipboardJS('.copy');
+
 
 
 

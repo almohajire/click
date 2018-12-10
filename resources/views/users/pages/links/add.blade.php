@@ -97,14 +97,20 @@
 		var $form = $('#form');
 		var $submit = $('#submit');
 
+		var clipboard = new ClipboardJS('.copy');
 
 
 
+		clipboard.on('success', function(e) {
+		    
+			window.open('https://bitly.com', '_blank');
+
+			//past = document.execCommand("paste");
+
+			alert( past );
 
 
-
-
-		new ClipboardJS('.copy');
+		});
 
 
 

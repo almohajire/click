@@ -37,15 +37,13 @@ class LinkController extends Controller
 
             $clicklink->delete();
 
-            $user->number_click = $user->number_click ++ ;
-
-            $user->save();
+            $user->increment('number_click');
 
 
-            $link->user->number_clicked = $link->user->number_clicked ++ ;
+
+            $link->user->number_clicked = $link->user->increment('number_clicked') ;
 
 
-            $link->user->save();
 
 
             return response()->json(['message' => 'Codegen is correct' ], 200);
@@ -279,10 +277,20 @@ class LinkController extends Controller
 
          }
 
-         $codegen = $user->discoverdLinks()->first()->pivot->codegen;
-         
+         $discoveredlink = $user->discoverdLinks()->where('link_id', $link->id)->firstOrFail();
 
+         $codegen = $discoveredlink->pivot->codegen;
+         
          $displayLink = Ad::first();
+
+         if( $displayLink ){
+            $displayLink = Ad::create([
+              'link' => 'https://laracasts.com',
+              'user_id' => Auth::id()   
+            ]);
+
+
+         }
 
          return view('users.pages.links.surf2', compact('link', 'displayLink', 'codegen'))  ;
       }

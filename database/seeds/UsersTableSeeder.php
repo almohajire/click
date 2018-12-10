@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use TCG\Voyager\Models\Role;
-use TCG\Voyager\Models\User;
 
 
-use App\User as Usernormal;
+
+use App\{User};
 
 class UsersTableSeeder extends Seeder
 {
@@ -18,74 +17,58 @@ class UsersTableSeeder extends Seeder
     {
 
 
-        
 
-/*
 
-        if (User::count() == 0) {
-            $role = Role::where('name', 'admin')->firstOrFail();
-
-            User::create([
-                'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
-                'password'       => bcrypt('password'),
-                'remember_token' => str_random(60),
-                'role_id'        => $role->id,
-            ]);
-        }
-
-*/
-
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
+                'email'          => 'admin@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 1
             ]);
 
 
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'User',
-                'email'          => 'user@user.com',
+                'email'          => 'user@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 0
             ]);
 
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'User1',
-                'email'          => 'user1@user.com',
+                'email'          => 'user1@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 0
             ]);
 
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'User2',
-                'email'          => 'user2@user.com',
+                'email'          => 'user2@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 0
             ]);
 
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'User3',
-                'email'          => 'user3@user.com',
+                'email'          => 'user3@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 0
             ]);
 
-        Usernormal::create([
+        User::create([
 
                 'name'           => 'User4',
-                'email'          => 'user4@user.com',
+                'email'          => 'user4@click.com',
                 'password'       => bcrypt('123456'),
                 'remember_token' => str_random(60),
                 'role'        => 0

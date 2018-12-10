@@ -15,7 +15,7 @@ class AdSeeder extends Seeder
     public function run()
     {
 
-    	$user = User::whereEmail('user@user.com')->first();
+    	$user = User::whereEmail('user@click.com')->first();
 
     	Ad::create(['user_id' => $user->id, 'link' => 'https://wikipedia.org']);
         

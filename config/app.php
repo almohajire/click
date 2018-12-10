@@ -218,6 +218,7 @@ return [
 
         'GetSetting' => App\Helpers\Config\Setting::class,
         'CommonPics' => App\Helpers\Common\Pics::class,
+        'Holder' => App\Helpers\Common\Holder::class,
 
     ],
 

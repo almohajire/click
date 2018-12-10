@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Clicklink};
+use Auth;
 class TestController extends Controller
 {
-    public function test(){
+    public function test(Request $request){
 
-    	return Clicklink::findOrFail(2);
+    	$discoveredlink = Auth::user()->discoverdLinks()->where('link_id', $request->id)->first();
+    	
+    	return $discoveredlink->pivot->codegen;
+    	
 
     }
 }

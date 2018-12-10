@@ -21,9 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('number_click')->unsigned()->nullable();
-            $table->integer('number_clicked')->unsigned()->nullable();
+            $table->integer('number_click')->unsigned()->default(0);
+            $table->integer('number_clicked')->unsigned()->default(0);
             $table->tinyInteger('role')->unsigned()->default(0);
+            $table->tinyInteger('color')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
