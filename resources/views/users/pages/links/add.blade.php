@@ -14,7 +14,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Short This Link <small>{{ route('links.detect', $hash) }}</small>
+                                Short This Link <small id="link-sent">{{ route('links.detect', $hash) }}</small>
 
                                 <button class="btn btn-info copy"  data-clipboard-text="{{ route('links.detect', $hash) }}">
 									    Copy to clipboard to shrink link
@@ -88,7 +88,7 @@
 
 
 @section('scripts')
-	<script src="{{ asset('js/axios/axios.min.js') }}"></script>
+
 
 	<script src="{{ asset('js/validate/validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/clipboard/clipboard.min.js') }}"></script>
@@ -97,17 +97,24 @@
 		var $form = $('#form');
 		var $submit = $('#submit');
 
+		var $linksent = $('#link-sent');
+
 		var clipboard = new ClipboardJS('.copy');
 
 
 
 		clipboard.on('success', function(e) {
+
+			@if( Auth::user()->shorten_open )
+
+				window.open( Auth::user()->shorten_url , '_blank');
+
+			@endif
 		    
-			window.open('https://bitly.com', '_blank');
+			
 
 			//past = document.execCommand("paste");
 
-			alert( past );
 
 
 		});
@@ -116,14 +123,15 @@
 
 		$submit.on('click',function(e){
 			e.preventDefault();
-			if( $form.valid() ){
+			if( $form.valid() && ($linksent.text() != $('#link').val() ) ){
+
 
 				axios.post('/link/store',{
                         headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         link: $('#link').val(),
-                        hash: '{{ $hash }}'
+                        hash: '{{ $hash }}' 
                         }).then(function(success){
 
                         	var data = success.data;

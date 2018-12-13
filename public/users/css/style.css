@@ -6307,7 +6307,9 @@ fieldset[disabled] .form-control {
   height: 100%;
   background: #eee;
   overflow: hidden;
-  text-align: center; }
+  text-align: center; 
+  opacity: 0.5;
+}
   .page-loader-wrapper p {
     font-size: 13px;
     margin-top: 10px;

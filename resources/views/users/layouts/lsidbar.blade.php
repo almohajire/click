@@ -12,10 +12,7 @@
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="separator" class="divider"></li>
+                            
                             <li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -45,7 +42,7 @@
                         </a>
                     </li>
 
-                    @if( Auth::user()->role > 0 )
+                    @if( Auth::user()->role > 0 || Auth::user()->number_click >= 2 )
 
                     <li>
                         <a href="{{ route('links.add') }}">
@@ -54,15 +51,16 @@
                         </a>
                     </li>
 
-
-                    @elseif( Auth::user()->number_click >= 2 )
+                    @else
 
                     <li>
-                        <a href="{{ route('links.add') }}">
+                        <a href="#" id="btn-add-link-cant">
                             <i class="material-icons">link</i>
                             <span>Add Link</span>
                         </a>
                     </li>
+
+
 
                     @endif
 
@@ -72,12 +70,27 @@
                             <span>My Links</span>
                         </a>
                     </li>
+
+                    @if( Auth::user()->role == 0 )
                     <li>
                         <a href="{{ route('links.mining') }}">
                             <i class="material-icons">local_atm</i>
                             <span>Mining</span>
                         </a>
                     </li>
+                    @endif
+
+                    @if( Auth::user()->role > 0 )
+
+                    <li class="header">Admin</li>
+                    <li>
+                        <a href="{{ route('links.unconfirmed') }}">
+                            <i class="material-icons">link</i>
+                            <span>Unconfirmed links</span>
+                        </a>
+                    </li>
+
+                    @endif
                 </ul>
             </div>
             <!-- #Menu -->

@@ -10,9 +10,53 @@ use App\{User, Link, Ad, Clicklink};
 use Auth;
 
 use Session;
+use GetSetting;
 class LinkController extends Controller
 {
     //
+      public function confirm(Request $request, Link $link){
+
+        if(Auth::user()->role > 0){
+
+          $link->confirmed = true;
+
+          $link->save();
+
+          if( $link->confirmed ){
+            return response()->json(['message' => 'Deleted succefully' ], 200);
+          }else{
+            return response()->json(['message' => 'Error when confirm' ], 500);
+          }
+          
+        }else{
+          return response()->json(['message' => 'Go away' ], 401);
+        }
+
+        $link->confirmed = true;
+
+        if(! Auth::user()->role > 0 ){
+
+          return redirect()->back();
+        }
+
+        $links = Link::whereConfirmed(false)->paginate( 15 );
+
+        return view('users.pages.links.unconfirmed', compact('links'));
+
+      }
+      public function unconfirmed(){
+
+        if(! Auth::user()->role > 0 ){
+
+          return redirect()->back();
+        }
+
+        $links = Link::whereConfirmed(false)->paginate( 15 );
+
+        return view('users.pages.links.unconfirmed', compact('links'));
+
+      }
+
       public function check(Request $request, User $user, Link $link){
          $user = Auth::user();
 
@@ -37,9 +81,35 @@ class LinkController extends Controller
 
             $clicklink->delete();
 
-            $user->increment('number_click');
+            if($link->user->role == 0){
 
+              $user->increment('number_click');
 
+            }
+
+            if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
+
+              $user->increment('points');
+
+              if( $user->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
+
+                $user->credit_add += intval( GetSetting::getConfig('links-to-add') );
+
+                $user->save();
+
+              }
+
+            }else{
+
+              $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
+
+                
+
+              $user->increment('points');
+
+              $user->save();
+
+            }
 
             $link->user->number_clicked = $link->user->increment('number_clicked') ;
 
@@ -158,96 +228,66 @@ class LinkController extends Controller
 
       public function mining(){
 
-        
 
-
-/*
-        if ( (Auth::user()->number_click - Auth::user()->number_clicked) >= 100 ){
-
-
-
-        //   //9anoun 9dim
-
-           $manyLink = Auth::user()->number_click - Auth::user()->number_clicked ;
-
-           $links = Link::where('user_id','!=', Auth::id())->take($manyLink)->paginate(20);
-
-
-          $manyLink = Auth::user()->number_click - Auth::user()->number_clicked ;
-
-          $links = Link::where('user_id','!=', Auth::id())->take($manyLink)->paginate(20);
-
-        }else{
-
-          $links = Link::where('user_id','!=', Auth::id())->paginate(20);
-
-
-        }
-
-        // if( (Auth::user()->number_click - Auth::user()->number_clicked) < 2 ){
-
-        //   //9anoun Jedid
-
-        //   
-
-
-
-        // }else{
-
-        //   //9anoun 9dim
-
-        //   $manyLink = Auth::user()->number_click - Auth::user()->number_clicked ;
-
-        //   $links = Link::where('user_id','!=', Auth::id())->take($manyLink)->paginate(20);
-
-        }
-
-        
-*/
-/*
-        //$links = collect();
-
-        $links = Link::take(0)->get();
-
-        $admins = User::where('role', '>' , 0)->get();
-
-        foreach($admins as $admin){
-          $links->add( $admin->links );
-        }
-
-
-        $links->add( Link::where('user_id','!=', Auth::id())->get() );
-
-        //$links->paginate(20);
-
-        //dd( $links );
-        */
-
-        //$admins = User::where('role', '>' , 0)->get(['id'])->toArray();
-
+        //if have no mines the point he should give him to collect points
+        //
+        //if dont find links from users get links from the best users
         $linkClicked = Clicklink::onlyTrashed()->where('user_id', Auth::id() )->get(['link_id'])->toArray();
 
+        $admins = User::where('role', '>' , 0)->get();
+        $admins_id = User::where('role', '>' , 0)->get(['id'])->pluck('id')->toArray();
+        $users_in_need = User::where('role', 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
         $links = Link::take(0)->get();
 
-        $admins = User::where('role', '>' , 0)->get();
+        $mine2points = false;
+
+        if(Auth::user()->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
+          $linksArray = Link::where('user_id','!=', Auth::id())
+            ->whereConfirmed( true )
+            ->whereNotIn('id', $linkClicked )
+            ->whereNotIn('user_id', $users_in_need)
+            ->whereNotIn('user_id', $admins_id)
+            ->get(['id'])
+            ->pluck('id')
+            ->toArray();
+
+          if( count($linksArray) > 0 ){
+
+            $links->add( Link::whereIn('id', $linksArray )->get() );
+            
+          }else{
+
+            $best_users = User::where('role', 0)->where('in_need', false)->orderBy('points')->get();
+
+            foreach ($best_users as $b_user) {
+              # code...
+              $links->add( $b_user->links()->whereNotIn('id', $linkClicked )->take(1)->get() );
+            }
+
+            if(count( $links ) == 0 ){
+              foreach($admins as $admin){
+                $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
+              }
+            }
+
+          }
+
+            
+        }else{
 
 
-        foreach($admins as $admin){
-          $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
+          foreach($admins as $admin){
+            $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
+          }
+
+          $mine2points = true;
         }
 
+        $links->paginate( intval( GetSetting::getConfig('paginate-links') ) );
+
+        return view('users.pages.links.mining', compact('links', 'mine2points')  );
 
 
-        $links = Link::where('user_id','!=', Auth::id())->whereNotIn('id', $linkClicked )
-        //->whereIn('user_id', $admins)
-        ->paginate(20);
-        // if( $links == 0){
-
-        //   return view('users.pages.links.mining');
-
-        // }else{
-
-         return view('users.pages.links.mining', compact('links')  );//}
       }
 
       public function mine(){
@@ -306,49 +346,67 @@ class LinkController extends Controller
    	}
    	public function store(Request $request){
 
-         if( Link::whereHash($request->hash)->first() ){
 
-            return response()->json(['message' => 'Not stored succefully because of hash' ], 500);
-
-         }
-
-         if( Link::whereLink($request->link)->first() ){
-
-            return response()->json(['message' => 'Not stored succefully because of link' ], 500);
-
-         }
-
-
-         if( $request->hash != Session::get('lastHash') ){
-
-            return response()->json(['message' => 'Not stored succefully because of session' ], 500);
-
-         }
+          if( Auth::user()->credit_add > 1 ){
 
 
 
 
-   		 $link = Link::create([
+             if( Link::whereHash($request->hash)->first() ){
 
-   			'link' => $request->link,
-            'hash' => $request->hash,
-            'confirmed' => true,
-   			'user_id' => Auth::id()
+                return response()->json(['message' => 'Not stored succefully because of hash' ], 500);
 
-   		]);
+             }
 
-   		 if($link){
-   		 	return response()->json(['message' => 'Added succefully', 'item' => json_encode( $link->toArray() ) ], 200);
-   		 }else{
-            return response()->json(['message' => 'Not stored succefully because of database' ], 500);
+             if( Link::whereLink($request->link)->first() ){
+
+                return response()->json(['message' => 'Not stored succefully because of link' ], 500);
+
+             }
+
+             if( $request->hash != Session::get('lastHash') ){
+
+                return response()->json(['message' => 'Not stored succefully because of session' ], 500);
+
+             }
+
+
+              $linkCreation = [
+
+                'link' => $request->link,
+                'hash' => $request->hash,
+                'user_id' => Auth::id()
+
+              ];
+
+              $linkCreation['confirmed'] = ( Auth::user()->role > 0 );
+
+              $link = Link::create( $linkCreation );
+
+               if($link){
+
+                $user = Auth::user();
+
+                $user->credit_add -= 1;
+                $user->save();
+                
+                return response()->json(['message' => 'Added succefully', 'item' => json_encode( $link->toArray() ) ], 200);
+               }else{
+                  return response()->json(['message' => 'Not stored succefully because of database' ], 500);
+                }
+
+
+
+
+          }else{
+
+            return response()->json(['message' => 'You should have more points to add links' ], 401);
+
           }
 
 
-          
-
-   		
-   		
    	}
+
    	public function delete(Link $link){
 
    		$link->delete();

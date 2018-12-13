@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\{
+    User
+};
 class HomeController extends Controller
 {
     /**
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('users.pages.home');
+        $bestusers = User::orderBy('number_click', 'desc')->take(10)->get();
+        return view('users.pages.home', compact('bestusers'));
     }
+    
 }

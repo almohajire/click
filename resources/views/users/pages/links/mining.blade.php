@@ -5,21 +5,32 @@
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 @section('content')
 
+    @if($mine2points)
 
- @foreach($links as $link)
-
-    <div id="blue-box">
-
-        <div class="website_block" id="1">
-            <a class="btn btn-primary btn-lg" href="{{ route('links.surf2', $link->id) }}">VISIT</a>
-            <div class="website_title">AdFly 1</div>
-                <span class="fa-stack fa-3x fa-lg"><i class="fa fa-square fa-stack-2x text-info"></i><i class="fa fa-money fa-stack-1x text-white"></i>
-                </span>
-                <div class="coins"><b>Reward</b>: <span>9 coins</span></div>
-        <a href="http://127.0.0.1:8000/link/surf" onclick="ModulePopup('1','http://127.0.0.1:8000/link/surf','Skip Ad');" class="visit_button">Visit</a><div class="x-small-circle-or">or</div><a href="javascript:void(0);" onclick="skipuser('1');" class="skip_button">skip</a>
-        <div class="website_bottom"><a href="javascript:void(0);" onclick="report_page('1','aHR0cDovL3N3aWZ0dG9waWEuY29tLzRIUHE=','ad_short');">Report</a></div>
-         </div>
+    <div class="alert alert-danger">
+        <strong>Note that those links is just for collecting points </strong> Not for getting click.
+        <br />
+        You need {{ GetSetting::getConfig('points-to-activate') }} clicks !
     </div>
+
+    @endif
+
+
+    @foreach($links as $link)
+        <a href="{{ route('links.surf2', $link->id) }}">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">link</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Visite and get</div>
+                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">125 P</div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
     @endforeach
 
 @endsection

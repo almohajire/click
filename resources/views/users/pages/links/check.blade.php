@@ -97,7 +97,7 @@
 
 @section('scripts')
 
-<script src="{{ asset('js/axios/axios.min.js') }}"></script>
+
 
 	<script src="{{ asset('js/validate/validate.min.js') }}"></script>
 

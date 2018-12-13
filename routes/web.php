@@ -23,8 +23,23 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/home', 'HomeController@index')->name('users.home');
 
+	Route::group(['prefix' => 'rightbar'], function () {
+
+		Route::post('/theme-color/{color}', 'RightBarController@changeColor')->name('colors.change');
+
+	});
+
+	
+
 	Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
 
+
+		Route::group(['prefix' => 'link'], function () {
+
+			Route::get('/unconfirmed', 'LinkController@unconfirmed')->name('links.unconfirmed');
+
+			Route::post('/confirm/{link}', 'LinkController@confirm')->name('links.confirm');
+		});
 
 /**********************Configs*********************************/
 			Route::get('/configs', 'ConfigController@index')->name('configs.index');
@@ -35,6 +50,8 @@ Route::group(['middleware' => ['auth']], function () {
 		
 
 	});
+
+
 
 
 

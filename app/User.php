@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use GetSetting;
 class User extends Authenticatable
 
 {
@@ -15,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'number_click', 'number_clicked',
-        'role'
+        'points', 'role', 'shorten_open', 'shorten_url', 'credit_add', 'in_need'
     ];
 
     /**
@@ -43,6 +45,12 @@ class User extends Authenticatable
 
     public function getIsAdminAttribute() {
             return $this->role >= 0;
+    }
+
+
+    public function getPointsAttribute()
+    {
+        return $this->number_click * intval( GetSetting::getConfig('points-multiplication') )  ;  
     }
 
 }

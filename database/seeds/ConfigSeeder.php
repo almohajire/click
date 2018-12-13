@@ -12,6 +12,49 @@ class ConfigSeeder extends Seeder
     public function run()
     {
 
+
+
+        DB::table('configs')->insert([
+            'slug' => 'points-multiplication',
+            'nameSetting' => 'points-multiplication',
+            'value' => '100',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'points-to-activate',
+            'nameSetting' => 'points-to-activate',
+            'value' => '2',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'links-to-add',
+            'nameSetting' => 'links-to-add',
+            'value' => '10',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'how-many-clicks-to-add-1',
+            'nameSetting' => 'how-many-clicks-to-add-1',
+            'value' => '10',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'paginate-links',
+            'nameSetting' => 'paginate-links',
+            'value' => '9',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        ///////////////////
+
 		DB::table('configs')->insert([
             'slug' => 'site-name',
             'nameSetting' => 'site name',
