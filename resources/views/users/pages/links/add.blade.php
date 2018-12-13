@@ -107,7 +107,7 @@
 
 			@if( Auth::user()->shorten_open )
 
-				window.open( Auth::user()->shorten_url , '_blank');
+				window.open('{{ Auth::user()->shorten_url}}' , '_blank');
 
 			@endif
 		    

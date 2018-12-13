@@ -25,7 +25,7 @@
                     </div>
                     <div class="content">
                         <div class="text">Visite and get</div>
-                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">125 P</div>
+                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ 1 * intval( GetSetting::getConfig('points-multiplication') )}}</div>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,4 @@
 @endsection
 
 
-@if( count( $links ) > 0 )
-    {{ $links->links() }}
-@endif
 

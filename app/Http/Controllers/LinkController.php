@@ -251,7 +251,7 @@ class LinkController extends Controller
           $linksArray = Link::where('user_id','!=', Auth::id())
             ->whereConfirmed( true )
             ->whereNotIn('id', $linkClicked )
-            ->whereNotIn('user_id', $users_in_need)
+            ->whereIn('user_id', $users_in_need)
             ->whereNotIn('user_id', $admins_id)
             ->get(['id'])
             ->pluck('id')
@@ -259,21 +259,27 @@ class LinkController extends Controller
 
           if( count($linksArray) > 0 ){
 
-            $links->add( Link::whereIn('id', $linksArray )->get() );
+
+              Link::whereIn('id', $linksArray )->get();
             
           }else{
 
-            $best_users = User::where('role', 0)->where('in_need', false)->orderBy('points')->get();
-
-            foreach ($best_users as $b_user) {
-              # code...
-              $links->add( $b_user->links()->whereNotIn('id', $linkClicked )->take(1)->get() );
-            }
+            User::where('role', 0)->where('in_need', false)->orderBy('points')->get()->each(function ($b_user, $key) use ($links) {
+                
+                $links->add( $b_user->links()->whereNotIn('id', $linkClicked )->first() );
+            });
 
             if(count( $links ) == 0 ){
-              foreach($admins as $admin){
-                $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
-              }
+
+              $admins->each(function ($admin, $key) use ($links) {
+                  
+                  $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key) use ($links) {
+                
+                      $links->add( $link );
+                  });
+              });
+
+
             }
 
           }
@@ -282,14 +288,26 @@ class LinkController extends Controller
         }else{
 
 
+
+
           foreach($admins as $admin){
-            $links->add( $admin->links()->whereNotIn('id', $linkClicked )->get() );
+
+            $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key)use($links) {
+                
+                $links->add( $link );
+            });
+
+
+
           }
 
           $mine2points = true;
         }
 
-        $links->paginate( intval( GetSetting::getConfig('paginate-links') ) );
+
+
+        //dd( $links );
+        //$links->paginate( intval( GetSetting::getConfig('paginate-links') ) );
 
         return view('users.pages.links.mining', compact('links', 'mine2points')  );
 
@@ -353,28 +371,28 @@ class LinkController extends Controller
    	public function store(Request $request){
 
 
-          if( Auth::user()->credit_add > 1 ){
+
+
+          if( Auth::user()->role > 0 || Auth::user()->credit_add >= 1 ){
 
 
 
+           if( Link::whereHash($request->hash)->first() ){
 
-             if( Link::whereHash($request->hash)->first() ){
+              return response()->json(['message' => 'Not stored succefully because of hash' ], 500);
 
-                return response()->json(['message' => 'Not stored succefully because of hash' ], 500);
+           }
+           if( Link::whereLink($request->link)->first() ){
 
-             }
+              return response()->json(['message' => 'Not stored succefully because of link' ], 500);
 
-             if( Link::whereLink($request->link)->first() ){
+           }
 
-                return response()->json(['message' => 'Not stored succefully because of link' ], 500);
+           if( $request->hash != Session::get('lastHash') ){
 
-             }
+              return response()->json(['message' => 'Not stored succefully because of session' ], 500);
 
-             if( $request->hash != Session::get('lastHash') ){
-
-                return response()->json(['message' => 'Not stored succefully because of session' ], 500);
-
-             }
+           }
 
 
               $linkCreation = [
@@ -393,22 +411,31 @@ class LinkController extends Controller
 
                 $user = Auth::user();
 
-                $user->credit_add -= 1;
-                $user->save();
+                if( $user->role == 0 ){
+
+                  $user->credit_add -= 1;
+                  $user->save();
+
+                }
+
+                
                 
                 return response()->json(['message' => 'Added succefully', 'item' => json_encode( $link->toArray() ) ], 200);
                }else{
-                  return response()->json(['message' => 'Not stored succefully because of database' ], 500);
-                }
 
+                  return response()->json(['message' => 'Not stored succefully because of database' ], 500);
+               }
 
 
 
           }else{
 
             return response()->json(['message' => 'You should have more points to add links' ], 401);
-
           }
+
+
+
+
 
 
    	}
