@@ -113,7 +113,13 @@ class LinkController extends Controller
 
             $link->user->number_clicked = $link->user->increment('number_clicked') ;
 
+            if( $user->number_clicked < $user->number_click ){
 
+              $user->in_need = true;
+
+              $user->save();
+
+            }
 
 
             return response()->json(['message' => 'Codegen is correct' ], 200);
