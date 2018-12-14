@@ -9,7 +9,7 @@
 	<a class="btn btn-info" target="_blank" href="{{ $link->link }}">
 	    Visit add
 	</a>
-	<iframe title="" src="{{$displayLink}}" width="100%" height="500px">
+	<iframe title="" src="{{ $displayLink->link }}" width="100%" height="500px">
   <p>Your browser does not support iframes.</p>
 </iframe>
 
@@ -38,7 +38,8 @@
 		 
 		}
 
-		  $('.copy').on('click', function(){
+
+		clipboard.on('success', function(e) {
 
 			document.getElementById("message").innerHTML = "Please wait, you are redirecting to the new page.";
 
@@ -46,12 +47,20 @@
 			$("head").append('<meta name="referrer" content="no-referrer"/>');
 
 			document.getElementById('autoclick').click();
+		    
+			
 
-			});
+			//past = document.execCommand("paste");
 
 
 
-		showCopy(4000);
+		});
+
+
+
+
+
+		showCopy( Number( {{ GetSetting::getConfig('time-skip-ad-second') }}) * 1000 );
 
 
 	</script>

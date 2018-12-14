@@ -25,8 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $bestusers = User::orderBy('number_click', 'desc')->take(10)->get();
+        $bestusers = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get();
+
+
         return view('users.pages.home', compact('bestusers'));
     }
-    
+
 }

@@ -347,15 +347,14 @@ class LinkController extends Controller
          
          $displayLink = Ad::first();
 
-         if( $displayLink ){
+         if( !$displayLink ){
             $displayLink = Ad::create([
-              'link' => 'https://laracasts.com',
+              'link' => GetSetting::getConfig('if-all-ads-fail'),
               'user_id' => Auth::id()   
             ]);
 
 
          }
-
          return view('users.pages.links.surf2', compact('link', 'displayLink', 'codegen'))  ;
       }
 

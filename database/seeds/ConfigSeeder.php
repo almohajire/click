@@ -53,6 +53,24 @@ class ConfigSeeder extends Seeder
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
+
+        
+
+        DB::table('configs')->insert([
+            'slug' => 'if-all-ads-fail',
+            'nameSetting' => 'if-all-ads-fail',
+            'value' => 'https://en.wikipedia.org/wiki/Solidity',
+            'type' => 'url',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'time-skip-ad-second',
+            'nameSetting' => 'time-skip-ad-second',
+            'value' => '4',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
         ///////////////////
 
 		DB::table('configs')->insert([

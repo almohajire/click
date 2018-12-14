@@ -21,11 +21,6 @@
                             </li>
 
 
-
-
-
-
-
                         </ul>
                     </div>
                 </div>
@@ -42,14 +37,14 @@
                         </a>
                     </li>
 
-                    @if( Auth::user()->role > 0 || Auth::user()->number_click >= 2 )
+                    @if( Auth::user()->role > 0 || Auth::user()->credit_add >= intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) )
 
-                    <li>
-                        <a href="{{ route('links.add') }}">
-                            <i class="material-icons">link</i>
-                            <span>Add Link</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{{ route('links.add') }}">
+                                <i class="material-icons">link</i>
+                                <span>Add Link</span>
+                            </a>
+                        </li>
 
                     @else
 
@@ -87,6 +82,13 @@
                         <a href="{{ route('links.unconfirmed') }}">
                             <i class="material-icons">link</i>
                             <span>Unconfirmed links</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('reports.index') }}">
+                            <i class="material-icons">document</i>
+                            <span>Reports</span>
                         </a>
                     </li>
 
