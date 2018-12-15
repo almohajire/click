@@ -81,7 +81,7 @@ class LinkController extends Controller
 
             $clicklink->delete();
 
-            if($link->user->role == 0){
+            if( $link->user->role == 0 ){
 
               $user->increment('number_click');
 
@@ -111,7 +111,7 @@ class LinkController extends Controller
 
             }
 
-            $link->user->number_clicked = $link->user->increment('number_clicked') ;
+            $link->user->increment('number_clicked') ;
 
             if( $user->number_clicked < $user->number_click ){
 
