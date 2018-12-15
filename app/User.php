@@ -48,10 +48,6 @@ class User extends Authenticatable
     }
 
 
-    public function getPointsAttribute()
-    {
-        return $this->number_click * intval( GetSetting::getConfig('points-multiplication') )  ;  
-    }
 
     public function reports(){
         return $this->hasMany('App\Report');

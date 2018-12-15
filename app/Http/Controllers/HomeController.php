@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $bestusers = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get();
 
 
