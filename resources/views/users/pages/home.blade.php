@@ -62,15 +62,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    	
                                     	@foreach($bestusers as $bu => $b_user)
 
-                                    	@endforeach
-                                        <tr>
+                                    	<tr>
                                             <td>{{ $bu }}</td>
                                             <td>{{ $b_user->name }}</td>
                                             <td><span class="label bg-green">{{ $b_user->points }}</span></td>
                                             
                                         </tr>
+
+                                    	@endforeach
+                                        
                                         
                                     </tbody>
                                 </table>

@@ -16,7 +16,7 @@
     @endif
 
 
-    @foreach($links as $link)
+    @forelse($links as $link)
         <a href="{{ route('links.surf2', $link->id) }}">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} hover-expand-effect">
@@ -25,18 +25,90 @@
                     </div>
                     <div class="content">
                         <div class="text">Visite and get</div>
-                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">125 P</div>
+                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ 1 * intval( GetSetting::getConfig('points-multiplication') )}}</div>
                     </div>
                 </div>
             </div>
         </a>
 
-    @endforeach
+    @empty
+
+        @if($mine2points)
+
+        <div class="alert alert-warning">
+            <strong>There is no links , sorry for that, we will give you  FREE points to add your link if you report here :</strong>
+            <br/>
+            <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} btn-report-no-admin-ads pull-right">Report</button>
+
+            <div class="clearfix"></div>
+        </div>
+
+
+
+        @endif
+
+    @endforelse
 
 @endsection
 
 
-@if( count( $links ) > 0 )
-    {{ $links->links() }}
+@section('scripts')
+
+<script>
+
+@if( $mine2points && count($links) == 0 )
+
+    
+    $('.btn-report-no-admin-ads').on('click', function(e){
+
+                $this = $(this);
+
+                $this.attr('disabled', true);
+
+                axios.post('/report/lake-admin-links',{
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                }).then(function(success){
+
+                    var data = success.data;
+
+                    swal(
+                        'Good',
+                        data.message,
+                        'success'
+
+                    );
+
+
+
+                })
+                .catch(function(error){
+                    console.log(error);
+
+                    var data = error.data;
+
+                    swal('No',
+                        data.message,
+                        'error'
+
+                    );
+
+                    $this.attr('disabled', false);
+
+
+                });
+
+
+
+
+    });
+
 @endif
+
+</script>
+
+@endsection
+
+
 
