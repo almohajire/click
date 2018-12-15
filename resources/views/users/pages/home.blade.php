@@ -68,7 +68,7 @@
                                     	<tr>
                                             <td>{{ $bu }}</td>
                                             <td>{{ $b_user->name }}</td>
-                                            <td><span class="label bg-green">{{ $b_user->points }}</span></td>
+                                            <td><span class="label bg-green">{{ $b_user->points * GetSetting::getConfig('points-multiplication') }}</span></td>
                                             
                                         </tr>
 

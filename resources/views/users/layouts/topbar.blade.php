@@ -35,7 +35,7 @@
                         @endif
 
 
-                        <li><a href="javascript:void(0);" class=""><i class="material-icons">star</i> Points: {{ Auth::user()->points }}</a></li>
+                        <li><a href="javascript:void(0);" class=""><i class="material-icons">star</i> Points: {{ Auth::user()->points * GetSetting::getConfig('points-multiplication') }}</a></li>
 
                     @endif
 
