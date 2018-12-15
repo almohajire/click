@@ -22,6 +22,12 @@ class LinkController extends Controller
 
           $link->save();
 
+          $user = $link->user;
+
+          $user->in_need = true;
+
+          $user->save();
+
           if( $link->confirmed ){
             return response()->json(['message' => 'Deleted succefully' ], 200);
           }else{
@@ -32,16 +38,6 @@ class LinkController extends Controller
           return response()->json(['message' => 'Go away' ], 401);
         }
 
-        $link->confirmed = true;
-
-        if(! Auth::user()->role > 0 ){
-
-          return redirect()->back();
-        }
-
-        $links = Link::whereConfirmed(false)->paginate( 15 );
-
-        return view('users.pages.links.unconfirmed', compact('links'));
 
       }
       public function unconfirmed(){
@@ -58,6 +54,8 @@ class LinkController extends Controller
       }
 
       public function check(Request $request, User $user, Link $link){
+
+
          $user = Auth::user();
 
          $codegen = $request->codegen;
@@ -74,6 +72,7 @@ class LinkController extends Controller
 
          if( $discoveredlink->pivot->codegen == $codegen){
 
+
             //dd($discoveredlink->pivot->id);
             //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
 
@@ -87,7 +86,7 @@ class LinkController extends Controller
 
             }
 
-            if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
+            if( $user->points <= intval( GetSetting::getConfig('points-to-activate') ) ){
 
               $user->increment('points');
 
@@ -243,35 +242,75 @@ class LinkController extends Controller
         $admins = User::where('role', '>' , 0)->get();
         $admins_id = User::where('role', '>' , 0)->get(['id'])->pluck('id')->toArray();
         $users_in_need = User::where('role', 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
+        $best_users = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
         $links = Link::take(0)->get();
 
         $mine2points = false;
 
         if(Auth::user()->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
-          $linksArray = Link::where('user_id','!=', Auth::id())
-            ->whereConfirmed( true )
-            ->whereNotIn('id', $linkClicked )
-            ->whereIn('user_id', $users_in_need)
-            ->whereNotIn('user_id', $admins_id)
-            ->get(['id'])
-            ->pluck('id')
-            ->toArray();
+
+
+          for( $i = 0; $i<=1; $i++ ) {
+
+            if( $i == 0){
+              $linksArray = Link::where('user_id','!=', Auth::id())
+                ->whereConfirmed( true )
+                ->whereNotIn('id', $linkClicked )
+                ->whereIn('user_id', $users_in_need)
+                ->whereNotIn('user_id', $admins_id)
+                //->orderBy('')
+                ->get(['id'])
+                ->pluck('id')
+                ->toArray();
+
+            }elseif( $i == 1){
+
+              $linksArray = Link::where('user_id','!=', Auth::id())
+                ->whereConfirmed( true )
+                ->whereNotIn('id', $linkClicked )
+                ->whereIn('user_id', $best_users)
+                ->whereNotIn('user_id', $admins_id)
+                //->orderBy('')
+                ->get(['id'])
+                ->pluck('id')
+                ->toArray(); 
+
+            }
+
+
+
+
+
+
+              if( count($linksArray) > 0 ){
+
+                $links = Link::whereIn('id', $linksArray )->get();
+
+
+
+                break;
+              }
+           }
+
+/*
 
           if( count($linksArray) > 0 ){
 
 
-              Link::whereIn('id', $linksArray )->get();
+              $links = Link::whereIn('id', $linksArray )->get();
             
           }else{
 
-            User::where('role', 0)->where('in_need', false)->orderBy('points')->get()->each(function ($b_user, $key) use ($links) {
+
+
+            User::where('role', 0)->where('in_need', false)->orderBy('points')->get()->each(function ($b_user, $key) use ($links, $linkClicked ) {
                 
                 $links->add( $b_user->links()->whereNotIn('id', $linkClicked )->first() );
             });
 
             if(count( $links ) == 0 ){
 
-              $admins->each(function ($admin, $key) use ($links) {
+              $admins->each(function ($admin, $key) use ($links, $linkClicked) {
                   
                   $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key) use ($links) {
                 
@@ -284,22 +323,21 @@ class LinkController extends Controller
 
           }
 
+          */
+
             
         }else{
 
 
-
-
-          foreach($admins as $admin){
-
-            $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key)use($links) {
+          $admins->each(function ($admin, $key) use ($links, $linkClicked ) {
+                  
+              $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key) use($links) {
                 
                 $links->add( $link );
             });
+          });
 
 
-
-          }
 
           $mine2points = true;
         }
@@ -367,8 +405,10 @@ class LinkController extends Controller
         // Giving an Hash
          $hash = $this->detect();
 
+          $link = route('links.detect', $hash); 
 
-          return view('users.pages.links.add', compact('hash'));
+
+          return view('users.pages.links.add', compact('hash', 'link'));
 
         }else{
           return redirect()->back();

@@ -10,7 +10,7 @@
     <div class="alert alert-danger">
         <strong>Note that those links is just for collecting points </strong> Not for getting click.
         <br />
-        You need {{ GetSetting::getConfig('points-to-activate') }} clicks !
+        You need just <strong>{{ GetSetting::getConfig('points-to-activate') - Auth::user()->points }}</strong>clicks !
     </div>
 
     @endif

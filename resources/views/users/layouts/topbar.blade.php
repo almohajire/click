@@ -17,13 +17,20 @@
                     @if( Auth::user()->role == 0 )
 
 
+                        @if( Auth::user()->credit_add > 0 )
+                        
+                            <li><a href="{{ route('links.add') }}" class=""><i class="material-icons">link</i> You can add {{ Auth::user()->credit_add }} link now</a></li>
+
+                        @endif
+
+
                         @if( Auth::user()->link_clicked >= Auth::user()->number_clicked )
                         
-                            <li><a href="javascript:void(0);" class=""><i class="material-icons">check</i> Eguality in links</a></li>
+                            <li><a href="javascript:void(0);" class=""><i class="material-icons">check</i> Equality in links</a></li>
 
                         @elseif(Auth::user()->link_clicked > Auth::user()->number_clicked)
 
-                            <li><a href="javascript:void(0);" class=""><i class="material-icons">refresh</i> Eguality on loading</a></li>
+                            <li><a href="javascript:void(0);" class=""><i class="material-icons">refresh</i> Equality on loading</a></li>
 
                         @endif
 

@@ -1,4 +1,14 @@
 @extends('users.layouts.app')
+
+@section('styles')
+<style type="text/css">
+	.form-border-none{
+		border:none !important;
+	
+	}
+</style>
+
+@endsection
 @section('content')
 
 <div class="container-fluid">
@@ -14,28 +24,41 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Short This Link <small id="link-sent">{{ route('links.detect', $hash) }}</small>
+                                
 
-                                <button class="btn btn-info copy"  data-clipboard-text="{{ route('links.detect', $hash) }}">
-									    Copy to clipboard to shrink link
-								</button>
+                                
                                 
                             </h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="body">
-                            <h2 class="card-inside-title">Add link</h2>
+                            <h2 class="card-inside-title">Add link by shorten this</h2>
+
+							
+
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" value="{{$link}}" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="form-line text-center form-border-none">
+                                            <button class="btn btn-block btn-info copy"  data-clipboard-text="{{ $link }}">
+									    		Copy to clipboard to shrink link
+											</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <hr />
 
                             <form id="form">
 

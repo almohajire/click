@@ -37,7 +37,7 @@
                         </a>
                     </li>
 
-                    @if( Auth::user()->role > 0 || Auth::user()->credit_add >= intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) )
+                    @if( Auth::user()->role > 0 || Auth::user()->credit_add > 0 )
 
                         <li>
                             <a href="{{ route('links.add') }}">
