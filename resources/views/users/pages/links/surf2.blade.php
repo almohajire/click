@@ -6,7 +6,7 @@
 	<button class="btn btn-info copy"  data-clipboard-text="{{ $codegen }}">
 	    Copy and skip
 	</button>
-	<a class="btn btn-info" target="_blank" href="{{ $link->link }}">
+	<a class="btn btn-info" target="_blank" href="{{ $displayLink->link }}">
 	    Visit add
 	</a>
 	<iframe title="" src="{{ $displayLink->link }}" width="100%" height="500px">

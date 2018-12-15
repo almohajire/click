@@ -87,7 +87,7 @@
 
                     <li>
                         <a href="{{ route('reports.index') }}">
-                            <i class="material-icons">document</i>
+                            <i class="material-icons">unarchive</i>
                             <span>Reports</span>
                         </a>
                     </li>

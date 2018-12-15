@@ -13,28 +13,47 @@
 
 
 			<div class="row clearfix">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">playlist_add_check</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">Click Confirmed</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ Auth::user()->links()->where('confirmed', true)->count() }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">link</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">Click Clicked</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">{{ Auth::user()->number_click }}</div>
+                @if( Auth::user()->is_admin )
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-pink hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">playlist_add_check</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Need to be confirmed</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ App\Link::where('confirmed', false)->count() }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                @else
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-pink hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">playlist_add_check</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Click Confirmed</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ Auth::user()->links()->where('confirmed', true)->count() }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-cyan hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">link</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Click Clicked</div>
+                                <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">{{ Auth::user()->number_click }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                @endif
+
                 
             </div>
 
@@ -58,6 +77,10 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Link clicked</th>
+                                            @if(Auth::user()->role > 0)
+                                                <th>Links</th>
+                                            @endif
                                             <th>Points</th>
                                         </tr>
                                     </thead>
@@ -68,6 +91,10 @@
                                     	<tr>
                                             <td>{{ $bu }}</td>
                                             <td>{{ $b_user->name }}</td>
+                                            @if(Auth::user()->role > 0)
+                                                <td><span class="label bg-orange">{{ $b_user->links->count() }}</span></td>
+                                            @endif
+                                            <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
                                             <td><span class="label bg-green">{{ $b_user->points * GetSetting::getConfig('points-multiplication') }}</span></td>
                                             
                                         </tr>
