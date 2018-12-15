@@ -30,8 +30,8 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="/home">
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('users.home') }}">
+                        <a href="{{ route('users.home') }}">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -39,7 +39,7 @@
 
                     @if( Auth::user()->role > 0 || Auth::user()->credit_add > 0 )
 
-                        <li>
+                        <li class="{{ \App\Helpers\Common\Links::ifActive('links.add') }}">
                             <a href="{{ route('links.add') }}">
                                 <i class="material-icons">link</i>
                                 <span>Add Link</span>
@@ -48,7 +48,7 @@
 
                     @else
 
-                    <li>
+                    <li class="">
                         <a href="#" id="btn-add-link-cant">
                             <i class="material-icons">link</i>
                             <span>Add Link</span>
@@ -59,7 +59,7 @@
 
                     @endif
 
-                    <li>
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('links.mine') }}">
                         <a href="{{ route('links.mine') }}">
                             <i class="material-icons">link</i>
                             <span>My Links</span>
@@ -67,7 +67,7 @@
                     </li>
 
                     @if( Auth::user()->role == 0 )
-                    <li>
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('links.mining') }}">
                         <a href="{{ route('links.mining') }}">
                             <i class="material-icons">local_atm</i>
                             <span>Mining</span>
@@ -78,14 +78,14 @@
                     @if( Auth::user()->role > 0 )
 
                     <li class="header">Admin</li>
-                    <li>
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('links.unconfirmed') }}">
                         <a href="{{ route('links.unconfirmed') }}">
                             <i class="material-icons">link</i>
                             <span>Unconfirmed links</span>
                         </a>
                     </li>
 
-                    <li>
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('reports.index') }}">
                         <a href="{{ route('reports.index') }}">
                             <i class="material-icons">unarchive</i>
                             <span>Reports</span>

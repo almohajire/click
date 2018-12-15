@@ -11,7 +11,24 @@ use App\{
 use Session;
 use Carbon;
 use Auth;
+use Route;
+
+
 //TODO
+
+
+class Links {
+
+    public static function  ifActive( $route , $active = 'active'){
+
+        return $route == \Request::route()->getName() ? $active : '';
+      }
+
+
+}
+
+
+
 /*
 Add the Transport field to students
 Add the Year life cycle
