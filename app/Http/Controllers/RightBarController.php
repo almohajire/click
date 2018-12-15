@@ -9,7 +9,7 @@ use App\{
 use Auth;
 class RightBarController extends Controller
 {
-    function changeColor($color){
+    function changeColor(Request $request, $color){
 
     	$user = Auth::user();
 
@@ -18,6 +18,18 @@ class RightBarController extends Controller
     	$user->save();
 
     	return response()->json(['message' => 'The color is Changed', 'color_id' => $color ]);
+
+    }
+
+    function shortenOpen(Request $request){
+
+    	$user = Auth::user();
+
+    	$user->shorten_open = $request->value;
+
+    	$user->save();
+
+    	return response()->json(['message' => 'The shorten open is Changed', 'value' => $user->shorten_open ]);
 
     }
 }

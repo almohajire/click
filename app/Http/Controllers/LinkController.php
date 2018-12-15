@@ -361,11 +361,20 @@ class LinkController extends Controller
 
       public function add(){
 
+        if( Auth::user()->role > 0 || Auth::user()->credit_add >= 1 ){
+
+
         // Giving an Hash
          $hash = $this->detect();
 
 
-   		return view('users.pages.links.add', compact('hash'));
+          return view('users.pages.links.add', compact('hash'));
+
+        }else{
+          return redirect()->back();
+        }
+
+
    	}
    	public function store(Request $request){
 

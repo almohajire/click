@@ -28,7 +28,7 @@
                             <li>
                                 <span>OPEN MY SHORTEN PROVIDER LINK  WHEN COPY?</span>
                                 <div class="switch">
-                                    <label><input type="checkbox" checked><span class="lever"></span></label>
+                                    <label><input id="shorten_open" type="checkbox" {{ Auth::user()->shorten_open ? 'checked' : '' }}><span class="lever"></span></label>
                                 </div>
                             </li>
                             

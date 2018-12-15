@@ -190,6 +190,56 @@
             });
             
         }
+
+
+        //shorten_open
+
+        if( $('#shorten_open').length ){
+
+            $('#shorten_open').on('change',function(e){
+                $this = $(this);
+                //.is(':checked')
+
+                e.preventDefault();
+
+                axios.post('/rightbar/shorten-open',{
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        value: $this.is(':checked')
+                        
+                        }).then(function(success){
+
+                            swal(
+                                'Good',
+                                '++++++',
+                                'success'
+
+                            );
+
+                        })
+                        .catch(function(error){
+                            console.log(error);
+
+                            swal('No',
+                                'error',
+                                'error'
+
+                            );
+
+                            $this.prop('checked', !$this.is(':checked') );
+
+                            
+
+
+                        });
+
+
+
+            });
+            
+        }
+
     </script>
 
     @yield('scripts')

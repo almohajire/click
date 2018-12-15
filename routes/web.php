@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::group(['prefix' => 'rightbar'], function () {
 
 		Route::post('/theme-color/{color}', 'RightBarController@changeColor')->name('colors.change');
+		Route::post('/shorten-open', 'RightBarController@shortenOpen')->name('shortens.open');
 
 	});
 
