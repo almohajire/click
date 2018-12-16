@@ -13,9 +13,25 @@ use GetSetting;
 class ReportController extends Controller
 {
 
-	public function index(){
 
-		$items = Report::paginate(20);
+	public function delete(Request $request, Report $report){
+
+        $report = Report::findOrFail( $report->id );
+        $report->delete();
+
+        if( ! Report::findOrFail( $report->id )){
+
+            return response()->json(['message' => 'Succefully reported' ], 200);
+            
+        }else{
+            return response()->json(['message' => 'Please try again' ], 500);
+        }
+    }
+
+
+    public function index(){
+
+		$items = Report::latest()->paginate(20);
 
 		return view('users.pages.admin.reports' ,compact('items'));
 	}

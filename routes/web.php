@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 		Route::post('/lake-admin-links', 'ReportController@lakeOfAdminLinks')->name('reports.lake-admin-links');
 
+		Route::post('/delete/{report}', 'ReportController@delete')->name('reports.delete');
+
 	});
 
 	

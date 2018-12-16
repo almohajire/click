@@ -15,17 +15,21 @@
 			<div class="row clearfix">
                 @if( Auth::user()->is_admin )
 
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box bg-pink hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">playlist_add_check</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">Need to be confirmed</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ App\Link::where('confirmed', false)->count() }}</div>
+                    <a href="{{ route('links.unconfirmed')}}">
+
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="info-box bg-pink hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">playlist_add_check</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">Need to be confirmed</div>
+                                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ App\Link::where('confirmed', false)->count() }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                    </a>
 
                 @else
 

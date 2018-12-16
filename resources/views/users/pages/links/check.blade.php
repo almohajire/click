@@ -3,7 +3,9 @@
 
 @section('content')
 
-
+<div class="alert alert-info redirected">
+	<h2>Wait You will be redirected to mining soon!</h2>
+</div>
 
 
 <div class="container-fluid">
@@ -108,6 +110,9 @@
 
 		var $form = $('#form');
 		var $submit = $('#submit');
+		var $redirect = $('.redirect');
+
+		$redirect.hide();
 
 
 
@@ -125,6 +130,8 @@
                         
                         }).then(function(success){
 
+                            $redirect.show();
+
                         	var data = success.data;
                         	var link = data.link;
                         	var message = data.message;
@@ -135,6 +142,8 @@
 								'success'
 
 							);
+
+							window.redirect = '{{ route('links.mining') }}';
 
                         })
 						.catch(function(error){

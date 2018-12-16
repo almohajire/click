@@ -21,6 +21,7 @@
                                         <th>Date</th>
                                         <th>User</th>
                                         <th>Message</th>
+                                        <th>Actions</th>
 
 
                                     </tr>
@@ -28,11 +29,12 @@
                                 <tbody>
                                 	@foreach($items as $item)
 
-                                    <tr>
+                                    <tr id="{{ $item->id }}">
                                         <th scope="row"> {{ $item->created_at }} </th>
                                         <td>{{ $item->reporter->name }}</td>
 
                                         <td>{{ $item->message }}</td>
+                                        <td><button class="btn btn-warning btn-delete"  data-id="{{ $item->id }}">Delete</button></td>
 
                                     </tr>
 
@@ -50,5 +52,49 @@
 @if(count( $items ))
     {!! $items->links() !!}
 @endif
+
+@endsection
+
+
+@section('scripts')
+
+    
+<script>
+    $delete = $('.btn-delete');
+
+    $delete.on('click', function(e){
+        e.preventDefault();
+
+        id = $(this).data('id');
+
+        axios.post('report/delete/'+ id ,{
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).then(function(success){
+
+            var $tr = $('#'+id);
+
+            $tr.remove();
+
+            swal(
+                'Good',
+                'Report deleted',
+                'success'
+            );
+
+        })
+        .catch(function(error){
+            console.log(error);
+
+            swal('No',
+                'error',
+                'error'
+                );
+            
+        });
+
+    });
+</script>
 
 @endsection
