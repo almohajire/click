@@ -24,11 +24,11 @@
                         @endif
 
 
-                        @if( Auth::user()->link_clicked >= Auth::user()->number_clicked )
+                        @if( Auth::user()->link_click == Auth::user()->number_clicked )
                         
                             <li><a href="javascript:void(0);" class=""><i class="material-icons">check</i> Equality in links</a></li>
 
-                        @elseif(Auth::user()->link_clicked > Auth::user()->number_clicked)
+                        @else
 
                             <li><a href="javascript:void(0);" class=""><i class="material-icons">refresh</i> Equality on loading</a></li>
 

@@ -86,7 +86,7 @@ class LinkController extends Controller
 
             }
 
-            if( $user->points <= intval( GetSetting::getConfig('points-to-activate') ) ){
+            if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
 
               $user->increment('points');
 
@@ -274,7 +274,6 @@ class LinkController extends Controller
                 ->get(['id'])
                 ->pluck('id')
                 ->toArray(); 
-
             }
 
 
