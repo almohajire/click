@@ -2,6 +2,10 @@
 
 @section('content')
 
+
+
+
+
 {!! Form::open(['route' => 'configs.store-config', 'method' => 'post' ,'class' => 'form-horizontal']) !!}
 
 @component('components.plain')

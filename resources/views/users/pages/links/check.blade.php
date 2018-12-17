@@ -1,14 +1,23 @@
 @extends('users.layouts.app')
 
+@section('styles')
+<style type="text/css">
+	.form-border-none{
+		border:none !important;
+	
+	}
+</style>
+
+@endsection
 
 @section('content')
 
-<div class="alert alert-info redirected">
+<div class="alert alert-info redirect">
 	<h2>Wait You will be redirected to mining soon!</h2>
 </div>
 
 
-<div class="container-fluid">
+		<div class="container-fluid">
             <div class="block-header">
                 <h2>Add codegen</h2>
             </div>
@@ -16,7 +25,7 @@
 
 
 
-<div class="row clearfix">
+			<div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -24,18 +33,7 @@
                                 Short This Link <small></small>
 
                             </h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
-                                        <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="body">
                             <h2 class="card-inside-title">Add link</h2>
@@ -75,6 +73,59 @@
 
 
 
+			@if( Auth::user()->is_admin )
+
+
+	            <div class="row clearfix">
+	                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                    <div class="card">
+	                        <div class="header">
+	                            <h2>
+	                                Admin Area <small></small>
+
+	                            </h2>
+
+	                        </div>
+	                        <div class="body">
+	                            <h2 class="card-inside-title">Admin Area</h2>
+
+
+
+		                            <div class="row clearfix">
+		                                <div class="col-sm-12 col-md-6">
+		                                    <div class="form-group">
+		                                        <div class="form-line form-border-none">
+		                                            <button class="btn btn-success btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="confirm">Confirm</button>
+		                                        </div>
+		                                    </div>
+
+		                                </div>
+
+		                                <div class="col-sm-12 col-md-6">
+		                                    <div class="form-group">
+		                                        <div class="form-line form-border-none">
+		                                            <button class="btn btn-warning btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="delete">Delete</button>
+		                                        </div>
+		                                    </div>
+
+		                                </div>
+		                            </div>
+
+
+
+
+
+
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+
+
+            @endif
+
+
+
 
 
 
@@ -111,6 +162,63 @@
 		var $form = $('#form');
 		var $submit = $('#submit');
 		var $redirect = $('.redirect');
+
+
+		@if( Auth::user()->is_admin )
+
+
+
+
+
+			var $confirmOrDelete = $('.btn-confirm-or-delete');
+
+
+			$confirmOrDelete.on('click',function(e){
+				e.preventDefault();
+
+				$this = $(this);
+
+				$this.attr('disabled',true);
+
+				id = $(this).data('id');
+
+		        axios.post('/admin/link/'+ $(this).data('confdel') +'/'+ id ,{
+		            headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		            }
+		        }).then(function(success){
+
+		            $redirect.show();
+
+
+
+		            swal(
+		                'Good',
+		                'Success',
+		                'success'
+		            );
+
+		            window.location = "{{ route('links.unconfirmed') }}";
+
+		        })
+		        .catch(function(error){
+		            console.log(error);
+
+		            swal('No',
+		                'error',
+		                'error'
+		                );
+
+		            $this.attr('disabled',false);
+		            
+		        });
+
+
+
+			});
+
+
+		@endif
 
 		$redirect.hide();
 

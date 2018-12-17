@@ -11,6 +11,10 @@
 @endsection
 @section('content')
 
+<div class="alert alert-info redirect">
+  <h2>Wait You will be redirected to mining soon!</h2>
+</div>
+
 <div class="container-fluid">
             <div class="block-header">
                 <h2>Add link</h2>
@@ -124,6 +128,10 @@
 
 		var clipboard = new ClipboardJS('.copy');
 
+		var $redirect = $('.redirect');
+
+		$redirect.hide();
+
 
 
 		clipboard.on('success', function(e) {
@@ -157,6 +165,8 @@
                         hash: '{{ $hash }}' 
                         }).then(function(success){
 
+                        	$redirect.show();
+
                         	var data = success.data;
                         	var link = data.link;
                         	var message = data.message;
@@ -167,6 +177,8 @@
 								'success'
 
 							);
+
+							window.location = "{{ route('links.mining') }}";
 
                         })
 						.catch(function(error){

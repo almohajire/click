@@ -1,6 +1,6 @@
 <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <div class="user-info">
+            <div class="user-info" {{--style='background-image: url("{{ GetSetting::getConfig('bg-profile-img') }}")'--}}>
                 <div class="image">
                     <img src="{{ asset('users/images/user.png') }}" width="48" height="48" alt="User" />
                 </div>

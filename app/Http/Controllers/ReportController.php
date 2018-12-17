@@ -14,9 +14,10 @@ class ReportController extends Controller
 {
 
 
-	public function delete(Request $request, Report $report){
+	public function delete(Request $request,$report){
 
         $report = Report::findOrFail( $report->id );
+        
         $report->delete();
 
         if( ! Report::findOrFail( $report->id )){

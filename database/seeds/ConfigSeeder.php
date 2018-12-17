@@ -71,6 +71,14 @@ class ConfigSeeder extends Seeder
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'bg-profile-img',
+            'nameSetting' => 'bg-profile-img',
+            'value' => 'bg-profile-img.jpg',
+            'type' => 'file',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
         ///////////////////
 
 		DB::table('configs')->insert([

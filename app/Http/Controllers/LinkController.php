@@ -487,7 +487,9 @@ class LinkController extends Controller
 
    	}
 
-   	public function delete(Link $link){
+   	public function delete( $link){
+
+      $link = Link::findOrFail( $link );
 
    		$link->delete();
 

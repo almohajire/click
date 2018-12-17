@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::get('/unconfirmed', 'LinkController@unconfirmed')->name('links.unconfirmed');
 
 			Route::post('/confirm/{link}', 'LinkController@confirm')->name('links.confirm');
+			Route::post('/delete/{link}', 'LinkController@delete')->name('links.delete');
 		});
 
 /**********************Configs*********************************/
@@ -88,7 +89,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	  Route::get('/add', 'LinkController@add')->name('links.add');
 	  Route::post('/store', 'LinkController@store')->name('links.store');
-	  Route::post('/delete', 'LinkController@delete')->name('links.delete');
+	  
 
 
 		Route::get('/send-originale', 'LinkController@originaleSend')->name('links.originale-send');
