@@ -44,7 +44,13 @@
 			document.getElementById("message").innerHTML = "Please wait, you are redirecting to the new page.";
 
 
-			$("head").append('<meta name="referrer" content="no-referrer"/>');
+			@if( GetSetting::getConfig('value-referrer')  != '' )
+
+				$("head").append('<meta name="referrer" content="{{ GetSetting::getConfig('value-referrer') }}"/>');
+
+				
+			@endif
+
 
 			document.getElementById('autoclick').click();
 		    

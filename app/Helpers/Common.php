@@ -147,6 +147,35 @@ class Holder {
                     'slug' => 'pink'
                 ],
                 [
+                    'name' => 'indigo',
+                    'slug' => 'indigo'
+                ],
+                [
+                    'name' => 'light-blue',
+                    'slug' => 'light-blue'
+                ],                
+                [
+                    'name' => 'blue-grey',
+                    'slug' => 'blue-grey'
+                ],
+                [
+                    'name' => 'blue',
+                    'slug' => 'blue'
+                ],
+                [
+                    'name' => 'amber',
+                    'slug' => 'amber'
+                ],
+                [
+                    'name' => 'black',
+                    'slug' => 'black'
+                ],
+                [
+                    'name' => 'orange',
+                    'slug' => 'orange'
+                ],
+
+                [
                     'name' => 'Purple',
                     'slug' => 'purple'
                 ],

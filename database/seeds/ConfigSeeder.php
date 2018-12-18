@@ -12,7 +12,13 @@ class ConfigSeeder extends Seeder
     public function run()
     {
 
-
+        DB::table('configs')->insert([
+            'slug' => 'value-referrer',
+            'nameSetting' => 'value-referrer',
+            'value' => 'false',
+            'type' => 'text',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
 
         DB::table('configs')->insert([
             'slug' => 'points-multiplication',
