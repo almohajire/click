@@ -178,7 +178,15 @@
 
 							);
 
-							window.location = "{{ route('links.mining') }}";
+							@if( Auth::user()->is_admin )
+
+								location.reload();
+
+							@else
+
+								window.location = "{{ route('links.mining') }}";
+
+							@endif
 
                         })
 						.catch(function(error){
