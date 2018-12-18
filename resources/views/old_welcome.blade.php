@@ -1,4 +1,4 @@
-@extends('front.zeta.layouts.app')
+@extends('layouts.app')
 @section('content')
 
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
