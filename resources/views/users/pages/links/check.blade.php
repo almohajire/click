@@ -251,7 +251,10 @@
 
 							);
 
-							window.redirect = '{{ route('links.mining') }}';
+
+
+
+							window.location = "{{ route('links.mining') }}";
 
                         })
 						.catch(function(error){
