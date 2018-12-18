@@ -78,6 +78,14 @@
                     @if( Auth::user()->role > 0 )
 
                     <li class="header">Admin</li>
+
+                    <li class="{{ \App\Helpers\Common\Links::ifActive('configs.index') }}">
+                        <a href="{{ route('configs.index') }}">
+                            <i class="material-icons">cog</i>
+                            <span>Configurations</span>
+                        </a>
+                    </li>
+
                     <li class="{{ \App\Helpers\Common\Links::ifActive('links.unconfirmed') }}">
                         <a href="{{ route('links.unconfirmed') }}">
                             <i class="material-icons">link</i>
