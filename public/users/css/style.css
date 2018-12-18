@@ -7588,7 +7588,8 @@ fieldset[disabled] .form-control {
         overflow: hidden;
         font-size: 14px;
         max-width: 200px;
-        color: #fff; }
+        //color: #fff;
+         }
       .sidebar .user-info .info-container .email {
         white-space: nowrap;
         -ms-text-overflow: ellipsis;
@@ -7597,7 +7598,8 @@ fieldset[disabled] .form-control {
         overflow: hidden;
         font-size: 12px;
         max-width: 200px;
-        color: #fff; }
+        //color: #fff;
+         }
       .sidebar .user-info .info-container .user-helper-dropdown {
         position: absolute;
         right: -3px;

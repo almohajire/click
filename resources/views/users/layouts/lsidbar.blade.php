@@ -1,6 +1,6 @@
 <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
-            <div class="user-info" {{--style='background-image: url("{{ GetSetting::getConfig('bg-profile-img') }}")'--}}>
+            <div class="user-info" style='background-image: url({{ GetSetting::ifImg('bg-profile-img') }})'>
                 <div class="image">
                     <img src="{{ asset('users/images/user.png') }}" width="48" height="48" alt="User" />
                 </div>
@@ -81,7 +81,7 @@
 
                     <li class="{{ \App\Helpers\Common\Links::ifActive('configs.index') }}">
                         <a href="{{ route('configs.index') }}">
-                            <i class="material-icons">cog</i>
+                            <i class="material-icons">settings</i>
                             <span>Configurations</span>
                         </a>
                     </li>
