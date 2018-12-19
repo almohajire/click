@@ -81,9 +81,10 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Link clicked</th>
                                             @if(Auth::user()->role > 0)
-                                                <th>Links</th>
+                                                <th>Has links</th>
+                                                <th>Discovered links</th>
+                                                <th>Links succefully clicked on</th>
                                             @endif
                                             <th>Points</th>
                                         </tr>
@@ -95,10 +96,11 @@
                                     	<tr>
                                             <td>{{ $bu }}</td>
                                             <td>{{ $b_user->name }}</td>
-                                            @if(Auth::user()->role > 0)
+                                            @if(Auth::user()->is_admin)
                                                 <td><span class="label bg-orange">{{ $b_user->links->count() }}</span></td>
+                                                <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
+                                                <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
                                             @endif
-                                            <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
                                             <td><span class="label bg-green">{{ $b_user->points * GetSetting::getConfig('points-multiplication') }}</span></td>
                                             
                                         </tr>
