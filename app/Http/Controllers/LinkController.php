@@ -200,7 +200,7 @@ class LinkController extends Controller
 
             $user = Auth::user();
 
-            $hash = sha256( $user->id. str_random(15) );
+            $hash = SHA256( $user->id. str_random(15) );
 
             Session::put('lastHash', $hash);
 
