@@ -11,6 +11,8 @@ use Auth;
 
 use Session;
 use GetSetting;
+
+
 class LinkController extends Controller
 {
     //
@@ -200,7 +202,7 @@ class LinkController extends Controller
 
             $user = Auth::user();
 
-            $hash = SHA256( $user->id. str_random(15) );
+            $hash = md5( $user->id. str_random(15) );
 
             Session::put('lastHash', $hash);
 
