@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('number_click')->unsigned()->default(0);
             $table->float('points')->unsigned()->default(0);
             $table->integer('number_clicked')->unsigned()->default(0);
-            $table->booloan('in_need')->default(false);
+            $table->boolean('in_need')->default(false);
             $table->tinyInteger('role')->unsigned()->default(0);
             $table->tinyInteger('color')->unsigned()->default(0);
             $table->boolean('shorten_open')->default(true);
