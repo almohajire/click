@@ -22,14 +22,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('number_click')->unsigned()->default(0);
-            $table->integer('points')->unsigned()->default(0);
+            $table->float('points')->unsigned()->default(0);
             $table->integer('number_clicked')->unsigned()->default(0);
-            $table->integer('in_need')->default(false);
+            $table->booloan('in_need')->default(false);
             $table->tinyInteger('role')->unsigned()->default(0);
             $table->tinyInteger('color')->unsigned()->default(0);
             $table->boolean('shorten_open')->default(true);
             $table->string('shorten_url')->default('https://bitly.com');
-            $table->integer('credit_add')->unsigned()->default(0);
+            $table->float('credit_add')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
