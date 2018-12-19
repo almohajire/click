@@ -19,7 +19,7 @@
 
                         @if( Auth::user()->credit_add > 0 )
                         
-                            <li><a href="{{ route('links.add') }}" class=""><i class="material-icons">link</i> You can add {{ Auth::user()->credit_add }} link now</a></li>
+                            <li><a href="{{ route('links.add') }}" class=""><i class="material-icons">link</i> You can add {{ floor( Auth::user()->credit_add ) }} link now</a></li>
 
                         @endif
 
