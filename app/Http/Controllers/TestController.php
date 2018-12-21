@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Clicklink};
 use Auth;
+use Carbon\Carbon;
 class TestController extends Controller
 {
     public function test(Request $request){
 
-    	$discoveredlink = Auth::user()->discoverdLinks()->where('link_id', $request->id)->first();
+    	$yes = Carbon::now();
+    	$link = Carbon::yesterday();
     	
-    	return $discoveredlink->pivot->codegen;
+    	dd(Carbon::now()->subDays(29) );
     	
 
     }

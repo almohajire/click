@@ -12,6 +12,8 @@ class ConfigSeeder extends Seeder
     public function run()
     {
 
+        //''
+
         DB::table('configs')->insert([
             'slug' => 'value-referrer',
             'nameSetting' => 'value-referrer',
@@ -74,6 +76,14 @@ class ConfigSeeder extends Seeder
             'slug' => 'time-skip-ad-second',
             'nameSetting' => 'time-skip-ad-second',
             'value' => '4',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'repeate-link-in-days',
+            'nameSetting' => 'repeate-link-in-days',
+            'value' => '1',
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
