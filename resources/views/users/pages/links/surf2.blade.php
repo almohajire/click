@@ -1,17 +1,13 @@
-@extends('users.layouts.app')
+@extends('users.layouts.surf')
 
 
 @section('content')
-	<p id="message"></p>
-	<button class="btn btn-info copy"  data-clipboard-text="{{ $codegen }}">
-	    Copy and skip
-	</button>
-	<a class="btn btn-info" target="_blank" href="{{ $displayLink->link }}">
-	    Visit add
-	</a>
-	<iframe title="" src="{{ $displayLink->link }}" width="100%" height="500px">
-  <p>Your browser does not support iframes.</p>
-</iframe>
+
+	<iframe title="" src="{{ $displayLink->link }}" class="all-frame">
+  <div class="alert alert-warning">
+  	<h2>Your browser does not support iframes.</h2>
+  </div>
+	</iframe>
 
 
 <a href="{{ $link->link }}" rel="noreferrer" id="autoclick">Link</a>
@@ -33,6 +29,7 @@
 
 		 
 		 setTimeout(function(){
+		 NProgress.done();
 		  $('.copy').show();
 		 },delay);
 		 
@@ -40,8 +37,7 @@
 
 
 		clipboard.on('success', function(e) {
-
-			document.getElementById("message").innerHTML = "Please wait, you are redirecting to the new page.";
+			swal('Copied', 'Please wait, you are redirecting to the new page.','success');
 
 
 			@if( GetSetting::getConfig('value-referrer')  != '' )

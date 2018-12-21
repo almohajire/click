@@ -12,13 +12,14 @@
 		<!-- Main Navigation -->
 		<nav class="main_nav justify-self-end">
 			<ul class="nav_items">
-				<li class="{{ \App\Helpers\Common\Links::ifActive('welcome') }}"><a href="{{ route('welcome') }}"><span>Home</span></a></li>
+				
 				@if( Auth::guest())
 
 					<li class="{{ \App\Helpers\Common\Links::ifActive('register') }}"><a href="{{ route('register') }}"><span>Register</span></a></li>
+					<li class="{{ \App\Helpers\Common\Links::ifActive('login') }}"><a href="{{ route('login') }}"><span>Log in</span></a></li>
 				@else
 
-					<li class="{{ \App\Helpers\Common\Links::ifActive('login') }}"><a href="{{ route('login') }}"><span>Log in</span></a></li>
+					<li class="{{ \App\Helpers\Common\Links::ifActive('welcome') }}"><a href="{{ route('welcome') }}"><span>Home</span></a></li>
 
 				@endif
 			</ul>
