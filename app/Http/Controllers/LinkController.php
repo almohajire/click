@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\{User, Link, Ad, Clicklink};
 use Auth;
-use Carbon;
+use Carbon\Carbon;
 use Session;
 use GetSetting;
 
