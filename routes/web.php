@@ -54,6 +54,13 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/delete/{link}', 'LinkController@delete')->name('links.delete');
 		});
 
+
+		Route::group(['prefix' => 'catcher'], function () {
+
+			Route::get('/logs/{user}', 'CatcherController@logs')->name('catchers.logs');
+
+		});
+
 /**********************Configs*********************************/
 			Route::get('/configs', 'ConfigController@index')->name('configs.index');
 			Route::post('/configs/store', 'ConfigController@store')->name('configs.store');

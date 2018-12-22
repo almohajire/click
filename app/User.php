@@ -53,4 +53,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Report');
     }
 
+
+    public function catchers()
+    {
+        return $this->hasMany('App\Catcher');
+    }
+
 }
