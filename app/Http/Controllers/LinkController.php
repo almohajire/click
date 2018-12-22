@@ -237,6 +237,28 @@ class LinkController extends Controller
         //if have no mines the point he should give him to collect points
         //
         //if dont find links from users get links from the best users
+<<<<<<< HEAD
+=======
+
+
+
+
+
+        $linkClicked = Clicklink::onlyTrashed()
+
+          ->where( 
+            'deleted_at', '>', 
+            Carbon::now()
+            //->subDays( 
+              ->subMinute(
+              intval( 
+              GetSetting::getConfig('repeate-link-in-days') 
+              ) 
+            ) 
+          )
+
+        ->where('user_id', Auth::id() )->get(['link_id'])->toArray();
+>>>>>>> dc391d395815e9b7d440de08a75dc994668c8d27
 
 
         $linkClicked = Clicklink::onlyTrashed()

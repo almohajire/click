@@ -83,8 +83,9 @@
                                             <th>Name</th>
                                             @if(Auth::user()->role > 0)
                                                 <th>Has links</th>
+                                                <th>His Succefully<br> clicked links</th>
                                                 <th>Discovered links</th>
-                                                <th>Links succefully clicked on</th>
+                                                <th>Links succefully <br>clicked on</th>
                                             @endif
                                             <th>Points</th>
                                         </tr>
@@ -98,6 +99,7 @@
                                             <td>{{ $b_user->name }}</td>
                                             @if(Auth::user()->is_admin)
                                                 <td><span class="label bg-orange">{{ $b_user->links->count() }}</span></td>
+                                                <td><span class="label bg-orange">{{ $b_user->number_clicked }}</span></td>
                                                 <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
                                                 <td><span class="label bg-blue">{{ $b_user->discoverdLinks()->where('deleted_at','!=', null)->count() }}</span></td>
                                             @endif
