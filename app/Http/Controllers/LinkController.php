@@ -114,13 +114,11 @@ class LinkController extends Controller
 
             $link->user->increment('number_clicked') ;
 
-            if( $user->number_clicked < $user->number_click ){
 
-              $user->in_need = true;
+            $user->in_need = ( $user->number_clicked < $user->number_click );
 
-              $user->save();
+            $user->save();
 
-            }
 
 
             return response()->json(['message' => 'Codegen is correct' ], 200);
@@ -239,8 +237,23 @@ class LinkController extends Controller
         //if have no mines the point he should give him to collect points
         //
         //if dont find links from users get links from the best users
-        $linkClicked = Clicklink::onlyTrashed()->where( 'deleted_at', '<', Carbon::now()->subDays( intval( GetSetting::getConfig('repeate-link-in-days') ) ) )->where('user_id', Auth::id() )->get(['link_id'])->toArray();
 
+
+        $linkClicked = Clicklink::onlyTrashed()
+
+
+          ->where( 
+            'deleted_at', '>', 
+            Carbon::now()
+            //->subDays( 
+              ->subMinute(
+              intval( 
+              GetSetting::getConfig('repeate-link-in-days') 
+              ) 
+            ) 
+          )
+          ->where('user_id', Auth::id() )
+          ->get(['link_id'])->toArray();
 
 
         $admins = User::where('role', '>' , 0)->get();

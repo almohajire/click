@@ -99,7 +99,7 @@
                                             @if(Auth::user()->is_admin)
                                                 <td><span class="label bg-orange">{{ $b_user->links->count() }}</span></td>
                                                 <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
-                                                <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>
+                                                <td><span class="label bg-blue">{{ $b_user->discoverdLinks()->where('deleted_at','!=', null)->count() }}</span></td>
                                             @endif
                                             <td><span class="label bg-green">{{ $b_user->points * GetSetting::getConfig('points-multiplication') }}</span></td>
                                             
