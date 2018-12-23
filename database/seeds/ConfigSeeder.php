@@ -25,7 +25,7 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'points-multiplication',
             'nameSetting' => 'points-multiplication',
-            'value' => '100',
+            'value' => '10',
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
@@ -41,7 +41,7 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'links-to-add',
             'nameSetting' => 'links-to-add',
-            'value' => '10',
+            'value' => '2',
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
@@ -49,7 +49,7 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'how-many-clicks-to-add-1',
             'nameSetting' => 'how-many-clicks-to-add-1',
-            'value' => '10',
+            'value' => '4',
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
@@ -83,7 +83,7 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'repeate-link-in-days',
             'nameSetting' => 'repeate-link-in-days',
-            'value' => '1',
+            'value' => '15',
             'type' => 'number',
             'created_at' => date('Y-m-d H:i:s'),
         ]);

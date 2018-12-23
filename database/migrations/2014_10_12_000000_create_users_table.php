@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('in_need')->default(false);
             $table->tinyInteger('role')->unsigned()->default(0);
             $table->tinyInteger('color')->unsigned()->default(0);
-            $table->boolean('shorten_open')->default(true);
+            $table->boolean('shorten_open')->default(false);
             $table->string('shorten_url')->default('https://bitly.com');
             $table->float('credit_add')->unsigned()->default(0);
             $table->rememberToken();
