@@ -82,6 +82,7 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             @if(Auth::user()->role > 0)
+                                                <th>If in need</th>
                                                 <th>Has links</th>
                                                 <th>His Succefully<br> clicked links</th>
                                                 <th>Discovered links</th>
@@ -98,6 +99,7 @@
                                             <td>{{ $bu }}</td>
                                             <td>{{ $b_user->name }}</td>
                                             @if(Auth::user()->is_admin)
+                                                <td><span class="label bg-{{ $b_user->in_need? 'red':'green' }}">{{ $b_user->in_need? 'In Need':'Not In Need' }}</span></td>
                                                 <td><span class="label bg-orange">{{ $b_user->links->count() }}</span></td>
                                                 <td><span class="label bg-orange">{{ $b_user->number_clicked }}</span></td>
                                                 <td><span class="label bg-blue">{{ $b_user->discoverdLinks->count() }}</span></td>

@@ -30,13 +30,13 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                Short This Link <small></small>
+                                Add codegen <small></small>
 
                             </h2>
 
                         </div>
                         <div class="body">
-                            <h2 class="card-inside-title">Add link</h2>
+                            <h2 class="card-inside-title">Add codegen</h2>
 
                             <form id="form">
 

@@ -78,7 +78,11 @@ class LinkController extends Controller
             //dd($discoveredlink->pivot->id);
             //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
 
-            $clicklink = Clicklink::findOrFail( $discoveredlink->pivot->id );
+
+
+            $clicklink = Clicklink::withTrashed()->where( 'id', $discoveredlink->pivot->id )->firstOrFail();
+
+
 
             $clicklink->delete();
 
@@ -102,6 +106,8 @@ class LinkController extends Controller
 
             }else{
 
+              $user = User::find( $user->id );
+
               $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
 
                 
@@ -113,6 +119,10 @@ class LinkController extends Controller
             }
 
             $link->user->increment('number_clicked') ;
+
+            $user->save();
+
+            $user = User::find( $user->id );
 
 
             $user->in_need = ( $user->number_clicked < $user->number_click );
@@ -237,8 +247,8 @@ class LinkController extends Controller
         //if have no mines the point he should give him to collect points
         //
         //if dont find links from users get links from the best users
-<<<<<<< HEAD
-=======
+// <<<<<<< HEAD
+// =======
 
 
 
@@ -258,7 +268,7 @@ class LinkController extends Controller
           )
 
         ->where('user_id', Auth::id() )->get(['link_id'])->toArray();
->>>>>>> dc391d395815e9b7d440de08a75dc994668c8d27
+// >>>>>>> dc391d395815e9b7d440de08a75dc994668c8d27
 
 
         $linkClicked = Clicklink::onlyTrashed()
