@@ -84,9 +84,9 @@
                                             @if(Auth::user()->role > 0)
                                                 <th>If in need</th>
                                                 <th>Has links</th>
-                                                <th>His Succefully<br> clicked links</th>
+                                                <th>His Succefully<br> clicked links<br>المفعول به</th>
                                                 <th>Discovered links</th>
-                                                <th>Links succefully <br>clicked on</th>
+                                                <th>Links succefully <br>click on<br>الفاعل</th>
                                             @endif
                                             <th>Points</th>
                                         </tr>

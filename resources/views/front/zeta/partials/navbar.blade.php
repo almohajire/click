@@ -19,7 +19,7 @@
 					<li class="{{ \App\Helpers\Common\Links::ifActive('login') }}"><a href="{{ route('login') }}"><span>Log in</span></a></li>
 				@else
 
-					<li class="{{ \App\Helpers\Common\Links::ifActive('welcome') }}"><a href="{{ route('welcome') }}"><span>Home</span></a></li>
+					<li class="{{ \App\Helpers\Common\Links::ifActive('users.home') }}"><a href="{{ route('users.home') }}"><span>Home</span></a></li>
 
 				@endif
 			</ul>
