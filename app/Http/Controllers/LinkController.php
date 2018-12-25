@@ -24,12 +24,6 @@ class LinkController extends Controller
 
           $link->save();
 
-          $user = $link->user;
-
-          $user->in_need = true;
-
-          $user->save();
-
           if( $link->confirmed ){
             return response()->json(['message' => 'Deleted succefully' ], 200);
           }else{
@@ -86,11 +80,7 @@ class LinkController extends Controller
 
             $clicklink->delete();
 
-            if( $link->user->role == 0 ){
 
-              $user->increment('number_click');
-
-            }
 
             if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
 
@@ -100,7 +90,6 @@ class LinkController extends Controller
 
                 $user->credit_add += intval( GetSetting::getConfig('links-to-add') );
 
-                $user->save();
 
               }
 
@@ -110,22 +99,27 @@ class LinkController extends Controller
 
               $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
 
-                
-
               $user->increment('points');
 
+
+            }
+
+            $user->save();
+
+
+            if( $link->user->role == 0 ){
+
+              $user->increment('number_click');
+              $link->user->increment('number_clicked') ;
               $user->save();
 
             }
 
-            $link->user->increment('number_clicked') ;
-
-            $user->save();
 
             $user = User::find( $user->id );
 
 
-            $user->in_need = ( $user->number_clicked < $user->number_click );
+            $user->in_need = ( $user->number_clicked > $user->number_click );
 
             $user->save();
 
