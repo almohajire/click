@@ -51,9 +51,6 @@ class LinkController extends Controller
 
       public function check(Request $request, User $user, Link $link){
 
-
-         $user = Auth::user();
-
          $codegen = $request->codegen;
 
          //Hna fin ymkan ykoun mchkiil
@@ -109,8 +106,11 @@ class LinkController extends Controller
 
             if( $link->user->role == 0 ){
 
+              $user = User::find( $user->id );
+
               $user->increment('number_click');
               $link->user->increment('number_clicked') ;
+
               $user->save();
 
             }
@@ -119,9 +119,12 @@ class LinkController extends Controller
             $user = User::find( $user->id );
 
 
-            $user->in_need = ( $user->number_clicked > $user->number_click );
+            $user->in_need = ( $user->number_click < $user->number_clicked );
 
             $user->save();
+
+            $link->increment('clicked') ;
+
 
 
 
@@ -132,11 +135,6 @@ class LinkController extends Controller
             return response()->json(['message' => 'Not stored succefully because of codegen' ], 500);
 
          }
-
-
-
-
-
 
 
          }else{

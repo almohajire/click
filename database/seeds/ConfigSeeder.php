@@ -67,7 +67,7 @@ class ConfigSeeder extends Seeder
         DB::table('configs')->insert([
             'slug' => 'if-all-ads-fail',
             'nameSetting' => 'if-all-ads-fail',
-            'value' => 'https://en.wikipedia.org/wiki/Solidity',
+            'value' => 'http://shorti.cf/',
             'type' => 'url',
             'created_at' => date('Y-m-d H:i:s'),
         ]);
