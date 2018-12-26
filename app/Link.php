@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Link extends Model
 {
 
-    protected $fillable = ['hash','link', 'clicked','confirmed', 'user_id'];
+    protected $fillable = ['hash','link', 'level', 'clicked','confirmed', 'user_id'];
 
     public function user(){
     	return $this->belongsTo('App\User');

@@ -83,4 +83,58 @@ class ReportController extends Controller
 
 
     }
+
+    public function lakeOfAdminLinks2(Request $request){
+
+        $user = Auth::user();
+
+
+        $report = Report::create([
+            'user_id' => $user->id,
+            'message' => 'Lake of admin links please add links now !'
+        ]);
+
+
+
+        if( $report ){
+
+            return response()->json(['message' => 'Succefully reported' ], 200);
+
+        }else{
+
+            return response()->json(['message' => 'Please try again' ], 500);
+
+        }
+
+
+    }
+
+
+    public function lakeOfLinks(Request $request){
+
+        $user = Auth::user();
+
+
+        $report = Report::create([
+            'user_id' => $user->id,
+            'message' => 'Lake of links please active more links now !'
+        ]);
+
+
+
+        if( $report ){
+
+            return response()->json(['message' => 'Succefully reported' ], 200);
+
+        }else{
+
+            return response()->json(['message' => 'Please try again' ], 500);
+
+        }
+
+
+    }
+
+
+
 }

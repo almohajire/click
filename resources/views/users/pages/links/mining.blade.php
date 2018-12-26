@@ -24,8 +24,12 @@
                         <i class="material-icons">link</i>
                     </div>
                     <div class="content">
-                        <div class="text">Visite and get</div>
-                        <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{ 1 * intval( GetSetting::getConfig('points-multiplication') )}}</div>
+                        <div class="text">[ {{ \App\Helpers\Common\Holder::linkLevel( $link->level )['name'] . ' class level link'  }} ]</div>
+                        
+                        <div class="number">
+                            <span  class="count-to" data-from="0" data-to="{{ 1 * intval( GetSetting::getConfig('points-multiplication') )}}" data-speed="{{ (1 * intval( GetSetting::getConfig('points-multiplication') )  )/100 }}" data-fresh-interval="{{ (1 * intval( GetSetting::getConfig('points-multiplication') )  )/100 }}">{{ 1 * intval( GetSetting::getConfig('points-multiplication') )}}</span>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -33,29 +37,41 @@
 
     @empty
 
-        @if($mine2points)
+            <div class="alert alert-warning">
 
-        <div class="alert alert-warning">
-            <strong>There is no links , sorry for that, we will give you  FREE points to add your link if you report here :</strong>
-            <br/>
-            <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} btn-report-no-admin-ads pull-right">Report</button>
-
-            <div class="clearfix"></div>
-        </div>
+                @if($mine2points && $from == 'mining')
 
 
-        @else
+                        <strong>There is no links , sorry for that, we will give you  FREE points to add your link if you report here :</strong>
+                        <br/>
+                        <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} send pull-right" data-path="lake-admin-links">Report</button>
 
 
-        <div class="alert alert-warning">
-            <strong>There is no valid link in the app now please come back later.</strong>
 
 
-            <div class="clearfix"></div>
-        </div>
+                @elseif($mine2points && $from == 'miningPoints')
 
 
-        @endif
+                        <strong>There is no links , sorry for that, please report here :</strong>
+                        <br/>
+                        <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} send pull-right" data-path="lake-admin-links-2">Report</button>
+
+
+
+                @else
+
+                    <div class="alert alert-warning">
+                        <strong>There is no links , sorry for that, please report here :</strong>
+                        <br/>
+                        <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} send pull-right" data-path="lake-of-links">Report</button>
+
+
+
+
+                @endif
+
+                <div class="clearfix"></div>
+            </div>
 
     @endforelse
 
@@ -66,55 +82,82 @@
 
 <script>
 
-@if( $mine2points && count($links) == 0 )
 
-    
-    $('.btn-report-no-admin-ads').on('click', function(e){
-
-                $this = $(this);
-
-                $this.attr('disabled', true);
-
-                axios.post('/report/lake-admin-links',{
-                    headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                }).then(function(success){
-
-                    var data = success.data;
-
-                    swal(
-                        'Good',
-                        data.message,
-                        'success'
-
-                    );
+    @if( count($links) == 0 )
 
 
 
-                })
-                .catch(function(error){
-                    console.log(error);
-
-                    var data = error.data;
-
-                    swal('No',
-                        data.message,
-                        'error'
-
-                    );
-
-                    $this.attr('disabled', false);
 
 
-                });
+
+
+
+
+    $('.send').on('click', function(e){
+
+        $this = $(this);
+
+        $this.attr('disabled', true);
+
+        axios.post('/report/' + $this.data('path'),{
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).then(function(success){
+
+            var data = success.data;
+
+            swal(
+                'Good',
+                data.message,
+                'success'
+
+            );
+
+            window.location = '{{ route('links.mining') }}';
+
+
+
+        })
+        .catch(function(error){
+            console.log(error);
+
+            var data = error.data;
+
+            swal('No',
+                data.message,
+                'error'
+
+            );
+
+            $this.attr('disabled', false);
+
+
+        });
 
 
 
 
     });
 
-@endif
+
+
+
+
+
+
+
+
+
+
+
+    @endif
+
+
+
+
+
+
 
 </script>
 

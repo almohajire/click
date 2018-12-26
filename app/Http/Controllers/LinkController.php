@@ -267,7 +267,8 @@ class LinkController extends Controller
         $best_users = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
         $links = Link::take(0)->get();
 
-        $mine2points = false;
+        $mine2points = true;
+        $from = 'miningPoints';
 
 
         $admins->each(function ($admin, $key) use ($links, $linkClicked ) {
@@ -279,7 +280,7 @@ class LinkController extends Controller
         });
 
 
-        return view('users.pages.links.mining', compact('links', 'mine2points')  );
+        return view('users.pages.links.mining', compact('links', 'mine2points', 'from')  );
 
 
 
@@ -424,8 +425,9 @@ class LinkController extends Controller
 
         //dd( $links );
         //$links->paginate( intval( GetSetting::getConfig('paginate-links') ) );
+        $from = 'mining';
 
-        return view('users.pages.links.mining', compact('links', 'mine2points')  );
+        return view('users.pages.links.mining', compact('links', 'mine2points','from')  );
 
 
       }
@@ -526,8 +528,13 @@ class LinkController extends Controller
                 'link' => $request->link,
                 'hash' => $request->hash,
                 'user_id' => Auth::id()
-
               ];
+
+              if(Auth::user()->role > 0){
+
+                $linkCreation['level'] = end( App\Helpers\Common\Holder::linkLevel() );
+
+              }
 
               $linkCreation['confirmed'] = ( Auth::user()->role > 0 );
 
@@ -544,7 +551,6 @@ class LinkController extends Controller
 
                 }
 
-                
                 
                 return response()->json(['message' => 'Added succefully', 'item' => json_encode( $link->toArray() ) ], 200);
                }else{

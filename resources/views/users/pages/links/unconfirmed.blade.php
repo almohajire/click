@@ -33,8 +33,19 @@
                                         <th scope="row"><i class="material-icons">{{ $link->confirmed?'check_circle': 'highlight_off' }}</i></th>
                                         <td><a href="{{ $link->link }}" target="_blank">{{ $link->link }}</a></td>
                                         <td class="confirm" data-id="{{ $link->id }}">
-                                            <a class="btn-confirm" data-id="{{ $link->id }}" href="#">Confirm</a>
+
+                                            <tr>
+
+                                                @foreach( App\Helpers\Common\Holder::linkLevel() as $l => $level )
+
+                                                    <td>
+                                                        <button class="btn btn-{{ $level['class'] }} btn-block btn-confirm" data-id="{{ $link->id }}" data-level="{{ $l }}">Confirm as level {{ $l+1 }}</button>
+                                                    </td>
+                                                @endforeach
+
+                                            </tr>
                                         </td>
+
                                     </tr>
 
                                 	@endforeach
@@ -63,12 +74,15 @@
     $conf.on('click', function(e){
         e.preventDefault();
 
-        id = $(this).data('id');
+        $this = $(this);
+
+        id = $this.data('id');
 
         axios.post('confirm/'+ id ,{
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            },
+            level: $this.data('level')
         }).then(function(success){
 
             var $tr = $('#'+id);

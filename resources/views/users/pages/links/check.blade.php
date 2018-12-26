@@ -95,7 +95,13 @@
 		                                <div class="col-sm-12 col-md-6">
 		                                    <div class="form-group">
 		                                        <div class="form-line form-border-none">
-		                                            <button class="btn btn-success btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="confirm">Confirm</button>
+
+		                                        	@foreach( App\Helpers\Common\Holder::linkLevel() as $l => $level )
+
+		                                            <button class="btn btn-{{ $level['class'] }} btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="confirm" data-level="{{ $l }}">Confirm as level {{ $l+1 }}</button>
+
+		                                            @endforeach
+
 		                                        </div>
 		                                    </div>
 
@@ -104,7 +110,7 @@
 		                                <div class="col-sm-12 col-md-6">
 		                                    <div class="form-group">
 		                                        <div class="form-line form-border-none">
-		                                            <button class="btn btn-warning btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="delete">Delete</button>
+		                                            <button class="btn btn-danger btn-block btn-confirm-or-delete" data-id="{{ $link->id }}" data-confdel="delete">Delete</button>
 		                                        </div>
 		                                    </div>
 
@@ -185,7 +191,8 @@
 		        axios.post('/admin/link/'+ $(this).data('confdel') +'/'+ id ,{
 		            headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		            }
+		            },
+		            level:$(this).data('level')
 		        }).then(function(success){
 
 		            $redirect.show();

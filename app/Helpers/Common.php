@@ -187,6 +187,29 @@ class Holder {
             }
         }
 
+
+        public static function linkLevel( $item = null ){
+            $levels = [
+                [
+                    'name' => 'Low',
+                    'class' => 'danger'
+                ],
+                [
+                    'name' => 'Medium',
+                    'class' => 'warning'
+                ],
+                [
+                    'name' => 'High',
+                    'class' => 'success'
+                ]
+            ];
+            if( $item === null){
+                return $levels;
+            }else{
+                return $levels[$item];
+            }
+        }
+
 /*
         public static function template_colors(){
 

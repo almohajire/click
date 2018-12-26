@@ -23,8 +23,11 @@ class CreateLinksTable extends Migration
             $table->integer('clicked')->default(0);
             $table->boolean('confirmed')->default(false);
             $table->string('hash')->unique();
+            $table->tinyInteger('level')->insigned()->default(0);
             //$table->string('ip');
             $table->integer('user_id')->index()->insigned();
+
+
 
             
             /*
