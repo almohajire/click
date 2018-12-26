@@ -73,6 +73,18 @@
                             <span>Mining</span>
                         </a>
                     </li>
+
+                        @if( Auth::user()->points >= GetSetting::getConfig('points-to-activate') )
+
+                        <li class="{{ \App\Helpers\Common\Links::ifActive('links.points_mining') }}">
+                            <a href="{{ route('links.points_mining') }}">
+                                <i class="material-icons">local_atm</i>
+                                <span>Points Mining</span>
+                            </a>
+                        </li>
+
+                        @endif
+
                     @endif
 
                     @if( Auth::user()->role > 0 )

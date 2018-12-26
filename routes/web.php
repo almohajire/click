@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 		Route::get('/mining', 'LinkController@mining')->name('links.mining');
 
+		Route::get('/points-mining', 'LinkController@miningPoints')->name('links.points_mining');
 		//Route::get('/detect/{random?}', 'LinkController@detect')->name('links.detect');
 
 

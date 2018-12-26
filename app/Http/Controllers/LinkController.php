@@ -92,8 +92,6 @@ class LinkController extends Controller
 
             }else{
 
-              $user = User::find( $user->id );
-
               $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
 
               $user->increment('points');
@@ -103,18 +101,32 @@ class LinkController extends Controller
 
             $user->save();
 
+            $user = User::find( $user->id );
+
 
             if( $link->user->role == 0 ){
 
-              $user = User::find( $user->id );
+              
+            $user->increment('number_click');
+              
+            $link->user->increment('number_clicked') ;
+              
 
-              $user->increment('number_click');
-              $link->user->increment('number_clicked') ;
+            $owner = $link->user;
 
-              $user->save();
+            $owner->in_need = ( $owner->number_click < $owner->number_clicked );
+
+            $owner->save();
+
+
 
             }
 
+
+            $user->save();
+
+
+            ///////////
 
             $user = User::find( $user->id );
 
@@ -124,8 +136,6 @@ class LinkController extends Controller
             $user->save();
 
             $link->increment('clicked') ;
-
-
 
 
             return response()->json(['message' => 'Codegen is correct' ], 200);
@@ -232,21 +242,10 @@ class LinkController extends Controller
          
       }
 
-
-      public function mining(){
-
-
-        //if have no mines the point he should give him to collect points
-        //
-        //if dont find links from users get links from the best users
-// <<<<<<< HEAD
-// =======
-
-
-
-
+      public function miningPoints(){
 
         $linkClicked = Clicklink::onlyTrashed()
+
 
           ->where( 
             'deleted_at', '>', 
@@ -258,8 +257,44 @@ class LinkController extends Controller
               ) 
             ) 
           )
+          ->where('user_id', Auth::id() )
+          ->get(['link_id'])->toArray();
 
-        ->where('user_id', Auth::id() )->get(['link_id'])->toArray();
+
+        $admins = User::where('role', '>' , 0)->get();
+        $admins_id = User::where('role', '>' , 0)->get(['id'])->pluck('id')->toArray();
+        $users_in_need = User::where('role', 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
+        $best_users = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
+        $links = Link::take(0)->get();
+
+        $mine2points = false;
+
+
+        $admins->each(function ($admin, $key) use ($links, $linkClicked ) {
+                
+            $admin->links()->whereNotIn('id', $linkClicked )->get()->each(function ($link, $key) use($links) {
+              
+              $links->add( $link );
+          });
+        });
+
+
+        return view('users.pages.links.mining', compact('links', 'mine2points')  );
+
+
+
+
+
+      }
+      public function mining(){
+
+
+        //if have no mines the point he should give him to collect points
+        //
+        //if dont find links from users get links from the best users
+// <<<<<<< HEAD
+// =======
+
 // >>>>>>> dc391d395815e9b7d440de08a75dc994668c8d27
 
 
@@ -300,8 +335,10 @@ class LinkController extends Controller
                 ->whereIn('user_id', $users_in_need)
                 ->whereNotIn('user_id', $admins_id)
                 //->orderBy('')
+                ->inRandomOrder()
                 ->get(['id'])
                 ->pluck('id')
+
                 ->toArray();
 
             }elseif( $i == 1){
@@ -312,6 +349,7 @@ class LinkController extends Controller
                 ->whereIn('user_id', $best_users)
                 ->whereNotIn('user_id', $admins_id)
                 //->orderBy('')
+                ->inRandomOrder()
                 ->get(['id'])
                 ->pluck('id')
                 ->toArray(); 

@@ -40,7 +40,7 @@
 		<div class="fs_menu_shapes"><img src="{!! asset('zeta/images/menu_shapes.png') !!}" alt=""></div>
 		<nav class="fs_menu_nav">
 			<ul class="fs_menu_list">
-				<li class="{{ \App\Helpers\Common\Links::ifActive('welcome') }}"><a href="{{ route('welcome') }}"><span><span>H</span>Home</span></a></li>
+				<li class="{{ \App\Helpers\Common\Links::ifActive('users.home') }}"><a href="{{ route('users.home') }}"><span><span>H</span>Home</span></a></li>
 
 			</ul>
 		</nav>

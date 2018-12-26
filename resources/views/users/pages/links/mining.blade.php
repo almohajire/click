@@ -44,6 +44,16 @@
         </div>
 
 
+        @else
+
+
+        <div class="alert alert-warning">
+            <strong>There is no valid link in the app now please come back later.</strong>
+
+
+            <div class="clearfix"></div>
+        </div>
+
 
         @endif
 
