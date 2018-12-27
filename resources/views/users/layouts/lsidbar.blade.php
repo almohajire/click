@@ -78,7 +78,7 @@
 
                         <li class="{{ \App\Helpers\Common\Links::ifActive('links.points_mining') }}">
                             <a href="{{ route('links.points_mining') }}">
-                                <i class="material-icons">local_atm</i>
+                                <i class="material-icons">star</i>
                                 <span>Points Mining</span>
                             </a>
                         </li>

@@ -65,6 +65,10 @@
                         <br/>
                         <button class="btn btn-lg bg-{{ \App\Helpers\Common\Holder::template_colors(  array_rand( \App\Helpers\Common\Holder::template_colors() ,1 )  )['slug'] }} send pull-right" data-path="lake-of-links">Report</button>
 
+                        <br />
+
+                        <a href="{{ route('links.points_mining')}}">You may like Go mining for some points to be from the best users</a>
+
 
 
 

@@ -66,12 +66,30 @@ class LinkController extends Controller
          if( $discoveredlink->pivot->codegen == $codegen){
 
 
+
+
+
+
             //dd($discoveredlink->pivot->id);
             //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
 
 
 
             $clicklink = Clicklink::withTrashed()->where( 'id', $discoveredlink->pivot->id )->firstOrFail();
+
+            if( $clicklink->deleted_at){
+
+              if($clicklink->deleted_at > Carbon::now()/*->subDays( */->subMinute( intval( 
+                                          GetSetting::getConfig('repeate-link-in-days') 
+                                                                                          ) ) ){
+
+
+                return response()->json(['message' => 'Not stored succefully because of time' ], 500);
+
+                
+              }
+
+            }
 
 
 
@@ -99,24 +117,22 @@ class LinkController extends Controller
 
             }
 
-            $user->save();
 
-            $user = User::find( $user->id );
 
 
             if( $link->user->role == 0 ){
 
               
-            $user->increment('number_click');
-              
-            $link->user->increment('number_clicked') ;
-              
+              $user->increment('number_click');
+                
+              $link->user->increment('number_clicked') ;
+                
 
-            $owner = $link->user;
+              $owner = User::find( $link->user->id );
 
-            $owner->in_need = ( $owner->number_click < $owner->number_clicked );
+              $owner->in_need = ( $owner->number_click > $owner->number_clicked );
 
-            $owner->save();
+              $owner->save();
 
 
 
@@ -131,7 +147,7 @@ class LinkController extends Controller
             $user = User::find( $user->id );
 
 
-            $user->in_need = ( $user->number_click < $user->number_clicked );
+            $user->in_need = ( $user->number_click > $user->number_clicked );
 
             $user->save();
 
