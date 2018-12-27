@@ -30,6 +30,7 @@
                                 <thead>
                                     <tr>
                                         <th>Confirmed</th>
+                                        <th>Level</th>
                                         <th>Link</th>
                                         <th>Statistique</th>
 
@@ -41,6 +42,11 @@
 
                                     <tr>
                                         <th scope="row"><i class="material-icons">{{ $link->confirmed?'check_circle': 'highlight_off' }}</i></th>
+                                        @if( $link->confirmed )
+                                            <td>{{ App\Helpers\Common\Holder::linkLevel( $link->level ) }}</td>
+                                        @else
+                                            <td>Not confirmed yet</td>
+                                        @endif
                                         <td><a href="{{ $link->link}}" target="_blank">{{ $link->link}}</a></td>
 
                                         <td>{{ $link->clicked }}</td>
