@@ -56,6 +56,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 			Route::post('/confirm/{link}', 'LinkController@confirm')->name('links.confirm');
 			Route::post('/delete/{link}', 'LinkController@delete')->name('links.delete');
+
+
+			Route::get('/exchange', 'LinkController@exchange')->name('links.exchange');
+			
 		});
 
 
@@ -93,9 +97,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 		Route::post('/check/{user}/{link}', 'LinkController@check')->name('links.check');
-
-
-		Route::get('/surf', 'LinkController@surf')->name('links.surf');
+		
+		Route::post('/exchange-check/{user}/{link}', 'LinkController@exchangeCheck')->name('links.exchange-check');
 
 		Route::get('/surf2/{link}', 'LinkController@surf2')->name('links.surf2');
 

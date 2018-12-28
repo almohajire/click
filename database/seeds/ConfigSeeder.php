@@ -30,6 +30,24 @@ class ConfigSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:s'),
         ]);
 
+        //boost point for some
+
+        DB::table('configs')->insert([
+            'slug' => 'points-booster',
+            'nameSetting' => 'points-booster',
+            'value' => '2',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('configs')->insert([
+            'slug' => 'credit-add-booster',
+            'nameSetting' => 'credit-add-booster',
+            'value' => '2',
+            'type' => 'number',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
         DB::table('configs')->insert([
             'slug' => 'points-to-activate',
             'nameSetting' => 'points-to-activate',

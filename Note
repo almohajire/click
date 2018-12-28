@@ -28,3 +28,12 @@ php artisan voyager:admin your@email.com --creat
 ---------------------------
 
 
+
+You should do away to store link coming from admin to user and admin to admin
+
+And you should  poping up cards to have more points when clicking iinto a link to an admin
+
+
+
+DONT FORGET ADMIN CLICK TO USER LINK
+

@@ -28,6 +28,24 @@ class UsersTableSeeder extends Seeder
                 'role'        => 1
             ]);
 
+        User::create([
+
+                'name'           => 'Admin2',
+                'email'          => 'admin2@click.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 1
+            ]);
+
+        User::create([
+
+                'name'           => 'Admin3',
+                'email'          => 'admin3@click.com',
+                'password'       => bcrypt('123456'),
+                'remember_token' => str_random(60),
+                'role'        => 1
+            ]);
+
 
         User::create([
 

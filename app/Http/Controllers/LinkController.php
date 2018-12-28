@@ -66,10 +66,6 @@ class LinkController extends Controller
          if( $discoveredlink->pivot->codegen == $codegen){
 
 
-
-
-
-
             //dd($discoveredlink->pivot->id);
             //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
 
@@ -97,35 +93,44 @@ class LinkController extends Controller
 
 
 
-            if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
-
-              $user->increment('points');
-
-              if( $user->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
-
-                $user->credit_add += intval( GetSetting::getConfig('links-to-add') );
-
-
-              }
-
-            }else{
-
-              $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
-
-              $user->increment('points');
-
-
-            }
+            
 
 
 
 
             if( $link->user->role == 0 ){
 
+
+              if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
+
+                $user->increment('points');
+
+                if( $user->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
+
+                  $user->credit_add += intval( GetSetting::getConfig('links-to-add') );
+
+
+                }
+
+
+                
+
+              }else{
+
+                $user->credit_add += 1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') ) ;
+
+                $user->increment('points');
+
+
+              }
+
+
+              ///////////////////
+
               
               $user->increment('number_click');
                 
-              $link->user->increment('number_clicked') ;
+              $link->user->increment('number_clicked');
                 
 
               $owner = User::find( $link->user->id );
@@ -135,6 +140,35 @@ class LinkController extends Controller
               $owner->save();
 
 
+
+            }else{
+
+              
+
+              if( $user->points < intval( GetSetting::getConfig('points-to-activate') ) ){
+
+                $user->increment('points');
+
+                if( $user->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
+
+                  $user->credit_add += intval( GetSetting::getConfig('links-to-add') );
+
+
+                }
+
+              }else{
+
+                $user->points += intval( GetSetting::getConfig('points-booster')  ) ;
+
+
+                $user->credit_add += (1/ intval( GetSetting::getConfig('how-many-clicks-to-add-1') )  ) * intval( GetSetting::getConfig('credit-add-booster')  ) ;
+
+                $user->increment('number_click');
+
+              }
+                
+              $link->user->increment('number_clicked') ;
+              
 
             }
 
@@ -240,9 +274,31 @@ class LinkController extends Controller
 
             if( $link ){
 
+                $way = '';
+
+              if( Auth::user()->is_admin && $link->user()->role > 0  ){
+
+                $way = 'admin2admin';
+
+              }elseif( Auth::user()->is_admin && $link->user()->role == 0 ){
+
+                $way = 'admin2user';
+
+              }elseif( Auth::user()->role == 0 && $link->user->is_admin ){
+
+                $way = 'user2admin';
+
+              }else{
+
+                $way = 'user2user';
+
+              }
+
+              //dd( $way);
+
                
 
-               return view('users.pages.links.check', compact('link'));
+              return view('users.pages.links.check', compact('link', 'way'));
 
             }else{
 
@@ -259,6 +315,14 @@ class LinkController extends Controller
       }
 
       public function miningPoints(){
+
+        if(Auth::user()->is_admin){
+
+          return redirect()->route('users.home');
+
+        }
+
+        $poping = null;
 
         $linkClicked = Clicklink::onlyTrashed()
 
@@ -296,14 +360,217 @@ class LinkController extends Controller
         });
 
 
-        return view('users.pages.links.mining', compact('links', 'mine2points', 'from')  );
+        return view('users.pages.links.mining', compact('links', 'mine2points', 'from', 'poping')  );
 
 
 
 
 
       }
+
+      public function exchangeCheck(Request $request, User $user, Link $link){
+
+         $codegen = $request->codegen;
+
+         //Hna fin ymkan ykoun mchkiil
+
+         $discoveredlink = $user->discoverdLinks()->where('link_id', $link->id)->first();
+
+
+         if( $discoveredlink ){
+
+          //dd( $discoveredlink->pivot->codegen , $codegen );
+
+
+         if( $discoveredlink->pivot->codegen == $codegen){
+
+
+            //dd($discoveredlink->pivot->id);
+            //return response()->json(['message' => $discoveredlink->pivot->id ], 200);
+
+
+
+            $clicklink = Clicklink::withTrashed()->where( 'id', $discoveredlink->pivot->id )->firstOrFail();
+
+            if( $clicklink->deleted_at){
+
+              if($clicklink->deleted_at > Carbon::now()/*->subDays( */->subMinute( intval( 
+                                          GetSetting::getConfig('repeate-link-in-days') 
+                                                                                          ) ) ){
+
+
+                return response()->json(['message' => 'Not stored succefully because of time' ], 500);
+
+                
+              }
+
+            }
+
+
+
+            $clicklink->delete();
+
+
+
+
+            if( $link->user->role == 0 ){
+
+              $user->increment('points');
+
+
+              ///////////////////
+
+                
+              $link->user->increment('number_clicked');
+                
+
+              $owner = User::find( $link->user->id );
+
+              $owner->in_need = ( $owner->number_click > $owner->number_clicked );
+
+              $owner->save();
+
+
+
+            }else{
+
+              $user->increment('points');
+
+              $user->increment('number_click');
+                
+              $link->user->increment('number_clicked') ;
+
+
+              $owner = User::find( $link->user->id );
+
+              $owner->in_need = ( $owner->number_click > $owner->number_clicked );
+
+              $owner->save();
+              
+
+            }
+
+
+            $user->save();
+
+
+            ///////////
+
+            $user = User::find( $user->id );
+
+
+            $user->in_need = ( $user->number_click > $user->number_clicked );
+
+            $user->save();
+
+            $link->increment('clicked') ;
+
+
+            return response()->json(['message' => 'Codegen is correct' ], 200);
+
+         }else{
+
+            return response()->json(['message' => 'Not stored succefully because of codegen' ], 500);
+
+         }
+
+
+         }else{
+
+            return response()->json(['message' => 'Not stored succefully because of link' ], 500);
+
+         }
+
+   
+         
+      }
+
+
+      public function exchange(){
+
+        if(!Auth::user()->is_admin){
+
+          return redirect()->route('users.home');
+
+        }
+
+        $linkClicked = Clicklink::onlyTrashed()
+
+          ->where( 
+            'deleted_at', '>', 
+            Carbon::now()
+            //->subDays( 
+              ->subMinute(
+              intval( 
+              GetSetting::getConfig('repeate-link-in-days') 
+              ) 
+            ) 
+          )
+          ->where('user_id', Auth::id() )
+          ->get(['link_id'])->toArray();
+        $admins = User::where('role', '>' , 0)->get();
+        $admins_id = User::where('role', '>' , 0)->get(['id'])->pluck('id')->toArray();
+        $admins_in_need = User::where('role', '>' , 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
+        $best_admins = User::where('role', '>' , 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
+        $links = Link::take(0)->get();
+
+
+        $admins_in_need = User::where('role','>', 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
+
+
+        for( $i = 0; $i<=1; $i++ ) {
+
+          if( $i == 0){
+            $linksArray = Link::where('user_id','!=', Auth::id())
+              ->whereConfirmed( true )
+              ->whereNotIn('id', $linkClicked )
+              ->whereIn('user_id', $admins_in_need)
+              ->whereIn('user_id', $admins_id)
+              //->orderBy('')
+              ->inRandomOrder()
+              ->get(['id'])
+              ->pluck('id')
+
+              ->toArray();
+
+          }elseif( $i == 1){
+
+            $linksArray = Link::where('user_id','!=', Auth::id())
+              ->whereConfirmed( true )
+              ->whereNotIn('id', $linkClicked )
+              ->whereIn('user_id', $best_admins)
+              ->whereIn('user_id', $admins_id)
+              //->orderBy('')
+              ->inRandomOrder()
+              ->get(['id'])
+              ->pluck('id')
+              ->toArray(); 
+          }
+
+
+
+            if( count($linksArray) > 0 ){
+
+              $links = Link::whereIn('id', $linksArray )->get();
+
+
+
+              break;
+            }
+         }
+
+
+        return view('users.pages.links.exchange', compact('links') );
+
+      }
+
       public function mining(){
+
+        if(Auth::user()->is_admin){
+
+          return redirect()->route('users.home');
+
+        }
 
 
         //if have no mines the point he should give him to collect points
@@ -337,6 +604,19 @@ class LinkController extends Controller
         $users_in_need = User::where('role', 0)->where('in_need', true)->get(['id'])->pluck('id')->toArray();
         $best_users = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
         $links = Link::take(0)->get();
+
+        if( Auth::user()->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
+
+          $poping = Clicklink::where('user_id', Auth::id() )->whereNotIn('link_id', $linkClicked )->whereIn('user_id', $admins_id )->first();
+
+        }else{
+
+          $poping = null;
+
+        }
+
+
+        
 
         $mine2points = false;
 
@@ -439,11 +719,15 @@ class LinkController extends Controller
 
 
 
+        //
+
+
+
         //dd( $links );
         //$links->paginate( intval( GetSetting::getConfig('paginate-links') ) );
         $from = 'mining';
 
-        return view('users.pages.links.mining', compact('links', 'mine2points','from')  );
+        return view('users.pages.links.mining', compact('links', 'mine2points','from','poping')  );
 
 
       }
@@ -455,12 +739,7 @@ class LinkController extends Controller
          return view('users.pages.links.mine', compact('links')  );
       }
 
-      public function surf(Request $request){
 
-         //dd($link->link);
-
-         return view('users.pages.links.surf');
-      }
 
       public function surf2(Request $request, Link $link){
 

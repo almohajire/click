@@ -73,7 +73,7 @@
 
 
 
-			@if( Auth::user()->is_admin )
+			@if( Auth::user()->is_admin && $link->user->role == 0 )
 
 
 	            <div class="row clearfix">
@@ -237,7 +237,19 @@
 			e.preventDefault();
 			if( $form.valid() ){
 
-				axios.post('/link/check/{{ Auth::id() }}/{{ $link->id }}',{
+				
+
+				@if($way == 'user2user' || $way == 'user2admin')
+
+					var url = '/link/check/{{ Auth::id() }}/{{ $link->id }}';
+
+				@else
+
+					var url = '/link/exchange-check/{{ Auth::id() }}/{{ $link->id }}';
+
+				@endif
+
+				axios.post(url,{
                         headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
@@ -258,10 +270,24 @@
 
 							);
 
+							@if($way == 'admin2admin')
+
+								window.location = "{{ route('links.exchange') }}";
+
+							@elseif($way == 'admin2user')
+
+								window.location = "{{ route('links.unconfirmed') }}";
+
+							@else
+
+								window.location = "{{ route('links.mining') }}";
+
+							@endif
 
 
 
-							window.location = "{{ route('links.mining') }}";
+
+							
 
                         })
 						.catch(function(error){

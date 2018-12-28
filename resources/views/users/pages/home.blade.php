@@ -68,7 +68,7 @@
 
 
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
                             <h2>Best 10 Users</h2>
@@ -96,7 +96,7 @@
                                     	@foreach($bestusers as $bu => $b_user)
 
                                     	<tr>
-                                            <td>{{ $bu }}</td>
+                                            <td>{{ $bu+1 }}</td>
                                             <td>{{ $b_user->name }}</td>
                                             @if(Auth::user()->is_admin)
                                                 <td><span class="label bg-{{ $b_user->in_need? 'red':'green' }}">{{ $b_user->in_need? 'In Need':'Not In Need' }}</span></td>
@@ -118,6 +118,64 @@
                         </div>
                     </div>
                 </div>
+
+
+                @if( Auth::user()->is_admin )
+
+
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Best 10 Admins</h2>
+
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>If in need</th>
+                                            <th>Has links</th>
+                                            <th>His Succefully<br> clicked links<br>المفعول به</th>
+                                            <th>Discovered links</th>
+                                            <th>Links succefully <br>click on<br>الفاعل</th>
+                                            <th>Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        @foreach($bestadmins as $ba => $b_admin)
+
+                                        <tr>
+                                            <td>{{ $ba+1 }}</td>
+                                            <td>{{ $b_admin->name }}</td>
+                                            <td><span class="label bg-{{ $b_admin->in_need? 'red':'green' }}">{{ $b_admin->in_need? 'In Need':'Not In Need' }}</span></td>
+                                            <td><span class="label bg-orange">{{ $b_admin->links->count() }}</span></td>
+                                            <td><span class="label bg-orange">{{ $b_admin->number_clicked }}</span></td>
+                                            <td><span class="label bg-blue">{{ $b_admin->discoverdLinks->count() }}</span></td>
+                                            <td><span class="label bg-blue">{{ $b_admin->number_click }}</span></td>
+                                            <td><span class="label bg-green">{{ $b_admin->points * GetSetting::getConfig('points-multiplication') }}</span></td>
+                                            
+                                        </tr>
+
+                                        @endforeach
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                @endif
 
 
 

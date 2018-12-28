@@ -17,7 +17,7 @@ class LinkSeeder extends Seeder
         for ( $x = 0; $x <= 5; $x++) {
 
 
-	        $users = User::where('role', 0)->get()->each(function ($b_user, $key){
+	        $users = User::all()->each(function ($b_user, $key){
 
 	        	$hash = md5( $b_user->id. str_random(15) );
 

@@ -192,15 +192,18 @@ class Holder {
             $levels = [
                 [
                     'name' => 'Low',
-                    'class' => 'danger'
+                    'class' => 'danger',
+                    'icon' => 'star_border'
                 ],
                 [
                     'name' => 'Medium',
-                    'class' => 'warning'
+                    'class' => 'warning',
+                    'icon' => 'star_half'
                 ],
                 [
                     'name' => 'High',
-                    'class' => 'success'
+                    'class' => 'success',
+                    'icon' => 'star'
                 ]
             ];
             if( $item === null){

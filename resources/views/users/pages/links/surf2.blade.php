@@ -59,10 +59,21 @@
 		});
 
 
+		@if(Auth::user()->is_admin)
+
+			showCopy(  0 );
+
+		@else
+
+			showCopy( Number( {{ GetSetting::getConfig('time-skip-ad-second') }}) * 1000 );
+
+		@endif
 
 
 
-		showCopy( Number( {{ GetSetting::getConfig('time-skip-ad-second') }}) * 1000 );
+
+
+		
 
 
 	</script>

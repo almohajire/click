@@ -84,6 +84,14 @@
                         </li>
 
                         @endif
+                    @else
+
+                        <li class="{{ \App\Helpers\Common\Links::ifActive('links.exchange') }}">
+                            <a href="{{ route('links.exchange') }}">
+                                <i class="material-icons">import_export</i>
+                                <span>Admin Exchange</span>
+                            </a>
+                        </li>
 
                     @endif
 
