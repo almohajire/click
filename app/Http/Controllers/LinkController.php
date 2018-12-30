@@ -636,7 +636,6 @@ class LinkController extends Controller
                 ->inRandomOrder()
                 ->get(['id'])
                 ->pluck('id')
-
                 ->toArray();
 
             }elseif( $i == 1){
@@ -711,17 +710,13 @@ class LinkController extends Controller
                 
                 $links->add( $link );
             });
+
           });
 
 
 
           $mine2points = true;
         }
-
-
-
-        //
-
 
 
         //dd( $links );
@@ -763,14 +758,14 @@ class LinkController extends Controller
 
          //vip_type
          $array2shake = [];
-         $displayLinkLev1 = Ad::where('vip_type', 0)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         $displayLinkLev1 = Ad::where('vip_type', 0)->where('start', '<', Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
          if( $displayLinkLev1 ){  $array2shake[] = $displayLinkLev1->id; }
-         $displayLinkLev2 = Ad::where('vip_type', 1)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         $displayLinkLev2 = Ad::where('vip_type', 1)->where('start', '<', Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
          if( $displayLinkLev2 ){  
             $array2shake[] = $displayLinkLev2->id;
             $array2shake[] = $displayLinkLev2->id; 
          }
-         $displayLinkLev3 = Ad::where('vip_type', 2)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         $displayLinkLev3 = Ad::where('vip_type', 2)->where('start', '<', Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
          if( $displayLinkLev3 ){
            $array2shake[] = $displayLinkLev3->id;
            $array2shake[] = $displayLinkLev3->id; 
