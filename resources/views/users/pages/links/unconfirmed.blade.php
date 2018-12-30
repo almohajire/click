@@ -32,7 +32,7 @@
                                     <tr id="{{ $link->id }}">
                                         <th scope="row"><i class="material-icons">{{ $link->confirmed?'check_circle': 'highlight_off' }}</i></th>
                                         <td><a href="{{ $link->link }}" target="_blank">{{ $link->link }}</a></td>
-                                        <td><a href="{{ route( 'links.surf2' , $link->link ) }}" target="_blank">{{ $link->link }}</a></td>
+                                        <td><a href="{{ route( 'links.surf2' , $link->id ) }}" target="_blank">Surf</a></td>
                                         <td class="confirm" data-id="{{ $link->id }}">
 
                                             <tr>
