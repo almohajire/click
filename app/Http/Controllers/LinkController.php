@@ -755,6 +755,8 @@ class LinkController extends Controller
          $discoveredlink = $user->discoverdLinks()->where('link_id', $link->id)->firstOrFail();
 
          $codegen = $discoveredlink->pivot->codegen;
+
+         $displayLink;
          
          
 
@@ -774,9 +776,9 @@ class LinkController extends Controller
            $array2shake[] = $displayLinkLev3->id;
          }
 
-         if( count( $array2shake ) > 0 ){
+         if( !empty( $array2shake )  ){
 
-          $displayLink = Ad::find( array_rand( $array2shake ) );
+          $displayLink = Ad::findOrFail( array_rand( $array2shake ) );
 
          }else{
 
