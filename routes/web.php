@@ -79,6 +79,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 			});
 
+			Route::group(['prefix' => 'ads'], function () {
+
+				Route::get('/', 'AdController@index')->name('ads.index');
+				Route::post('/store', 'AdController@store')->name('ads.store');
+				Route::get('/add', 'AdController@add')->name('ads.add');
+			});
+
 
 
 			

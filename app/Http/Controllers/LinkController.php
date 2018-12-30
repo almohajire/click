@@ -774,11 +774,6 @@ class LinkController extends Controller
            $array2shake[] = $displayLinkLev3->id;
          }
 
-
-
-
-         $displayLink = Ad::first();
-
          if( count( $array2shake ) > 0 ){
 
           $displayLink = Ad::find( array_rand( $array2shake ) );
@@ -792,8 +787,6 @@ class LinkController extends Controller
               'start' => Carbon::now(),
               'end' => Carbon::now()->addMonth(),
             ]);
-
-            $displayLink->increment('displayed');
 
          }
 
