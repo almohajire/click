@@ -277,11 +277,11 @@ class LinkController extends Controller
 
                 $way = '';
 
-              if( Auth::user()->is_admin && $link->user()->role > 0  ){
+              if( Auth::user()->is_admin && $link->user->role > 0  ){
 
                 $way = 'admin2admin';
 
-              }elseif( Auth::user()->is_admin && $link->user()->role == 0 ){
+              }elseif( Auth::user()->is_admin && $link->user->role == 0 ){
 
                 $way = 'admin2user';
 
