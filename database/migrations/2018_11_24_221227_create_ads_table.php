@@ -28,6 +28,8 @@ class CreateAdsTable extends Migration
             $table->datetime('end')->nullable();
 
 
+
+
             $table->timestamps();
         });
     }

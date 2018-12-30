@@ -28,5 +28,7 @@ php artisan voyager:admin your@email.com --creat
 ---------------------------
 
 
+Backup shorten url
 
+Management of ads
 

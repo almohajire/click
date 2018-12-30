@@ -759,16 +759,49 @@ class LinkController extends Controller
 
          $codegen = $discoveredlink->pivot->codegen;
          
+         
+
+         //vip_type
+         $array2shake = [];
+         $displayLinkLev1 = Ad::where('vip_type', 0)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         if( $displayLinkLev1 ){  $array2shake[] = $displayLinkLev1->id; }
+         $displayLinkLev2 = Ad::where('vip_type', 1)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         if( $displayLinkLev2 ){  
+            $array2shake[] = $displayLinkLev2->id;
+            $array2shake[] = $displayLinkLev2->id; 
+         }
+         $displayLinkLev3 = Ad::where('vip_type', 2)->where('start', '<' Carbon::now())->where('end', '>' Carbon::now())->inRandomOrder()->first();
+         if( $displayLinkLev3 ){
+           $array2shake[] = $displayLinkLev3->id;
+           $array2shake[] = $displayLinkLev3->id; 
+           $array2shake[] = $displayLinkLev3->id;
+         }
+
+
+
+
          $displayLink = Ad::first();
 
-         if( !$displayLink ){
+         if( count( $array2shake ) > 0 ){
+
+          $displayLink = Ad::find( array_rand( $array2shake ) );
+
+         }else{
+
             $displayLink = Ad::create([
               'link' => GetSetting::getConfig('if-all-ads-fail'),
-              'user_id' => Auth::id()   
+              'user_id' => User::where('role', 1)->first()->id,
+              'vip_type' => 2,
+              'start' => Carbon::now(),
+              'end' => Carbon::now()->addMonth(),
             ]);
 
+            $displayLink->increment('displayed');
 
          }
+
+         $displayLink->increment('displayed');
+
          return view('users.pages.links.surf2', compact('link', 'displayLink', 'codegen'))  ;
       }
 
