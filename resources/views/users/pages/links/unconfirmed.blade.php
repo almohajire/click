@@ -19,8 +19,8 @@
                                 <thead>
                                     <tr>
                                         <th>Confirmed</th>
-                                        <th>Link</th>
-
+                                        <th>Direct link</th>
+                                        <th>Surfing the link</th>
 
                                         <th>Confirm</th>
 
@@ -32,6 +32,7 @@
                                     <tr id="{{ $link->id }}">
                                         <th scope="row"><i class="material-icons">{{ $link->confirmed?'check_circle': 'highlight_off' }}</i></th>
                                         <td><a href="{{ $link->link }}" target="_blank">{{ $link->link }}</a></td>
+                                        <td><a href="{{ route( 'links.surf2' , $link->link ) }}" target="_blank">{{ $link->link }}</a></td>
                                         <td class="confirm" data-id="{{ $link->id }}">
 
                                             <tr>
