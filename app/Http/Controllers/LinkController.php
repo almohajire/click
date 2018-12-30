@@ -606,6 +606,8 @@ class LinkController extends Controller
         $best_users = User::where('role', 0)->orderBy('points', 'desc')->take(10)->get(['id'])->pluck('id')->toArray();
         $links = Link::take(0)->get();
 
+        //POP UP
+
         if( Auth::user()->points >= intval( GetSetting::getConfig('points-to-activate') ) ){
 
           $poping = Clicklink::where('user_id', Auth::id() )->whereNotIn('link_id', $linkClicked )->whereIn('user_id', $admins_id )->first();
