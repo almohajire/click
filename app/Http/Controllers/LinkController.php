@@ -11,6 +11,7 @@ use Auth;
 use Carbon\Carbon;
 use Session;
 use GetSetting;
+use App\Helpers\Common\Holder;
 
 
 class LinkController extends Controller
@@ -774,7 +775,7 @@ class LinkController extends Controller
 
       public function add(){
 
-        if( Auth::user()->role > 0 || Auth::user()->credit_add >= 1 ){
+        if( Auth::user()->is_admin > 0 || Auth::user()->credit_add >= 1 ){
 
 
         // Giving an Hash
@@ -796,7 +797,7 @@ class LinkController extends Controller
 
 
 
-          if( Auth::user()->role > 0 || Auth::user()->credit_add >= 1 ){
+          if( Auth::user()->is_admin || Auth::user()->credit_add >= 1 ){
 
 
 
@@ -827,7 +828,11 @@ class LinkController extends Controller
 
               if(Auth::user()->role > 0){
 
-                $linkCreation['level'] = end( App\Helpers\Common\Holder::linkLevel() );
+                $arrLK = array_keys( Holder::linkLevel() );
+
+                $arrLL = $arrLK;
+
+                $linkCreation['level'] = end( $arrLL );
 
               }
 

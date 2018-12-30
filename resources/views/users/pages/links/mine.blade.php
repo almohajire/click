@@ -43,7 +43,7 @@
                                     <tr>
                                         <th scope="row"><i class="material-icons">{{ $link->confirmed?'check_circle': 'highlight_off' }}</i></th>
                                         @if( $link->confirmed )
-                                            <td>{{ App\Helpers\Common\Holder::linkLevel( $link->level ) }}</td>
+                                            <td>{{ App\Helpers\Common\Holder::linkLevel( $link->level )['name'] }}</td>
                                         @else
                                             <td>Not confirmed yet</td>
                                         @endif

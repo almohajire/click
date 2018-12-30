@@ -33,15 +33,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::group(['prefix' => 'report'], function () {
 
-		Route::get('/', 'ReportController@index')->name('reports.index');
+		
 
 		Route::post('/lake-admin-links', 'ReportController@lakeOfAdminLinks')->name('reports.lake-admin-links');
 
 		Route::post('/lake-admin-links2', 'ReportController@lakeOfAdminLinks2')->name('reports.lake-admin-links2');
 
 		Route::post('/lake-of-links', 'ReportController@lakeOfLinks')->name('reports.lake-of-links');
-
-		Route::post('/delete/{report}', 'ReportController@delete')->name('reports.delete');
 
 	});
 
@@ -59,6 +57,30 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 			Route::get('/exchange', 'LinkController@exchange')->name('links.exchange');
+
+
+			Route::group(['prefix' => 'report'], function () {
+
+				
+
+				Route::get('/', 'ReportController@index')->name('reports.index');
+
+				Route::post('/delete/{report}', 'ReportController@delete')->name('reports.delete');
+
+			});
+
+
+			Route::group(['prefix' => 'configs'], function () {
+
+				Route::get('/', 'ConfigController@index')->name('configs.index');
+				Route::post('/store', 'ConfigController@store')->name('configs.store');
+				Route::get('/add', 'ConfigController@add')->name('configs.add');
+				Route::post('/store-config', 'ConfigController@storeConfig')->name('configs.store-config');
+
+			});
+
+
+
 			
 		});
 
@@ -70,10 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
 		});
 
 /**********************Configs*********************************/
-			Route::get('/configs', 'ConfigController@index')->name('configs.index');
-			Route::post('/configs/store', 'ConfigController@store')->name('configs.store');
-			Route::get('/configs/add', 'ConfigController@add')->name('configs.add');
-			Route::post('/configs/store-config', 'ConfigController@storeConfig')->name('configs.store-config');
+			
 
 		
 
