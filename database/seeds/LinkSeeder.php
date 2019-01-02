@@ -25,7 +25,6 @@ class LinkSeeder extends Seeder
 
 	        		
 
-	        		'link' => 'http://127.0.0.1:8000/link/detect/'.$hash,
 	                'hash' => $hash,
 	                'user_id' => $b_user->id,
 	                'confirmed' => true,

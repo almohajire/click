@@ -776,13 +776,26 @@ class LinkController extends Controller
            $array2shake[] = $displayLinkLev3->id;
          }
 
+         //if there is no item in the array there is no prob
+
          if( !empty( $array2shake )  ){
 
-          $displayLink = Ad::findOrFail( array_rand( $array2shake ) );
+          //This is a part of the error
+
+          //ii there is some item we shake it to take one randomely
+
+          //but displayLink return 0 // there is no id == 0
+
+          //we solve it :D
+
+          $displayLink = Ad::findOrFail( array_rand( $array2shake, 1 ) );
 
          }else{
 
+          //we create one
+
             $displayLink = Ad::create([
+              //you notice the config?
               'link' => GetSetting::getConfig('if-all-ads-fail'),
               'user_id' => User::where('role', 1)->first()->id,
               'vip_type' => 2,
