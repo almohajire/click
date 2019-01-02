@@ -25,7 +25,7 @@ class LinkSeeder extends Seeder
 
 	        		
 
-	        		'link' => env('APP_URL').'/link/detect/'.$hash,
+	        		'link' => 'http://127.0.0.1/link/detect/'.$hash,
 	                'hash' => $hash,
 	                'user_id' => $b_user->id,
 	                'confirmed' => true,
