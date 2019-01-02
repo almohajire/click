@@ -761,6 +761,7 @@ class LinkController extends Controller
          
 
          //vip_type
+         // that assemble some ads if there are with considerence of the limit of time and vip type??
          $array2shake = [];
          $displayLinkLev1 = Ad::where('vip_type', 0)->where('start', '<', Carbon::now())->where('end', '>', Carbon::now())->inRandomOrder()->first();
          if( $displayLinkLev1 ){  $array2shake[] = $displayLinkLev1->id; }
