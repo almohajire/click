@@ -10,7 +10,7 @@
 	</iframe>
 
 
-<a href="{{ $link->link }}" rel="noreferrer" id="autoclick">Link</a>
+<a href="{{ $link->link }}" rel="noreferrer" id="autoclick">{{-- Link --}}</a>
 
 @endsection
 
