@@ -1,0 +1,40 @@
+# Click Master System - ملف .htaccess بديل
+# لحل مشكلة Internal Server Error
+
+# تفعيل mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # إعادة توجيه جميع الطلبات إلى مجلد public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# منع عرض محتويات المجلدات
+Options -Indexes
+
+# منع الوصول للملفات الحساسة
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.lock">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "artisan">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "install.php">
+    Order allow,deny
+    Deny from all
+</Files>

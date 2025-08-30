@@ -1,0 +1,492 @@
+/* ===== CRITICAL LAYOUT FIXES ===== */
+/* إصلاح مشكلة تخطيط الصفحة الأساسي */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    min-height: 100vh !important;
+    background: #f8f9fa !important;
+}
+
+/* إصلاح مشكلة wrapper */
+#wrapper {
+    display: flex !important;
+    min-height: 100vh !important;
+    padding-top: 70px !important;
+    position: relative !important;
+    background: #f8f9fa !important;
+    width: 100% !important;
+    margin: 0 !important; /* إزالة أي margin */
+}
+
+/* إصلاح مشكلة السايد بار */
+.sidebar-wrapper {
+    width: 280px !important;
+    min-height: calc(100vh - 70px) !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2) !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 70px !important;
+    z-index: 1000 !important;
+    transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important; /* إزالة أي margin */
+}
+
+/* إصلاح مشكلة المحتوى الرئيسي */
+.page-content-wrapper {
+    flex: 1 !important;
+    margin-left: 280px !important;
+    min-height: calc(100vh - 70px) !important;
+    background: #f8f9fa !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    z-index: 1 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important; /* إزالة margin-right */
+    margin-bottom: 0 !important; /* إزالة margin-bottom */
+    width: calc(100% - 280px) !important;
+    padding: 0 !important; /* إزالة جميع padding */
+}
+
+.page-content {
+    padding: 1rem 2rem !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    word-wrap: break-word !important;
+    background: #f8f9fa !important;
+    min-height: calc(100vh - 70px) !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin: 0 !important; /* إزالة جميع margin */
+}
+
+/* إصلاح مشكلة الـ navbar */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+    height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* ===== SIDEBAR SCROLLBAR FIXES ===== */
+/* إصلاح مشكلة شريط التمرير في السايد بار */
+.sidebar {
+    height: 100% !important;
+    max-height: calc(100vh - 70px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent !important;
+    padding-right: 0 !important; /* إزالة padding-right لمنع تداخل مع شريط التمرير */
+    position: relative !important;
+}
+
+/* إجبار ظهور السكرول بار */
+.sidebar::-webkit-scrollbar {
+    width: 12px !important; /* زيادة العرض ليكون أكثر وضوحاً */
+    background: rgba(255, 255, 255, 0.1) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* تخصيص شريط التمرير للـ Webkit (Chrome, Safari, Edge) */
+.sidebar::-webkit-scrollbar {
+    width: 12px !important; /* زيادة العرض ليكون أكثر وضوحاً */
+    background: rgba(255, 255, 255, 0.1) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 5px !important;
+    margin: 5px 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 5px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    background-clip: content-box !important;
+    min-height: 40px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid transparent !important;
+    background-clip: content-box !important;
+}
+
+.sidebar::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+
+/* تخصيص شريط التمرير للـ Firefox */
+.sidebar {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent !important;
+}
+
+/* إجبار ظهور السكرول بار في جميع المتصفحات */
+.sidebar {
+    overflow-y: scroll !important; /* إجبار ظهور السكرول بار */
+    scrollbar-gutter: stable !important; /* منع تغيير العرض */
+}
+
+/* إصلاح مشكلة عدم ظهور السكرول بار */
+.sidebar-wrapper {
+    overflow: hidden !important;
+}
+
+.sidebar-nav {
+    padding-bottom: 30px !important; /* إضافة مساحة في الأسفل */
+}
+
+.nav-list {
+    margin-bottom: 30px !important; /* إضافة مساحة في الأسفل */
+}
+
+/* إجبار ظهور السكرول بار */
+.sidebar {
+    scrollbar-width: auto !important; /* إجبار ظهور السكرول بار في Firefox */
+}
+
+/* إضافة محتوى إضافي لضمان ظهور السكرول بار */
+.sidebar::after {
+    content: '' !important;
+    display: block !important;
+    height: 50px !important;
+    width: 100% !important;
+}
+
+/* ===== SIDEBAR NAVIGATION FIXES ===== */
+/* إصلاح مشكلة روابط السايد بار */
+.sidebar .nav-link {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    padding: 12px 20px !important;
+    border-radius: 8px !important;
+    margin: 2px 15px !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    transform: translateX(5px) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    border-left: 4px solid #ffffff !important;
+}
+
+.sidebar .nav-link i {
+    font-size: 18px !important;
+    width: 24px !important;
+    text-align: center !important;
+    color: #ffffff !important;
+}
+
+/* ===== RESPONSIVE FIXES ===== */
+/* إصلاح مشكلة التجاوب */
+@media (max-width: 768px) {
+    .sidebar-wrapper {
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
+    }
+    
+    .sidebar-wrapper.show {
+        transform: translateX(0) !important;
+    }
+    
+    .page-content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    .page-content {
+        padding: 1rem !important;
+    }
+}
+
+/* ===== BASIC COMPONENT FIXES ===== */
+/* إصلاحات أساسية للمكونات */
+.card {
+    border-radius: 8px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+}
+
+.table {
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+/* ===== COMPREHENSIVE COLOR FIXES ===== */
+/* إصلاح مشكلة الألوان الأساسية */
+.text-primary {
+    color: #667eea !important;
+}
+
+.text-secondary {
+    color: #6c757d !important;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-info {
+    color: #17a2b8 !important;
+}
+
+/* ===== TEXT VISIBILITY FIXES ===== */
+/* إصلاح مشكلة ظهور النصوص */
+body, .page-content {
+    color: #2c3e50 !important;
+    font-weight: 400 !important;
+}
+
+/* إصلاح مشكلة العناوين */
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+}
+
+/* إصلاح مشكلة النصوص في البطاقات */
+.card {
+    color: #2c3e50 !important;
+}
+
+.card-title {
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+}
+
+.card-text {
+    color: #495057 !important;
+    font-weight: 400 !important;
+}
+
+/* إصلاح مشكلة الأرقام والإحصائيات */
+.statistics-number, .stats-number, .number {
+    color: #2c3e50 !important;
+    font-weight: 700 !important;
+    font-size: 1.2em !important;
+}
+
+/* إصلاح مشكلة النصوص في الجداول */
+.table {
+    color: #2c3e50 !important;
+}
+
+.table th {
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+    background-color: #f8f9fa !important;
+}
+
+.table td {
+    color: #495057 !important;
+    font-weight: 400 !important;
+}
+
+/* إصلاح مشكلة النصوص في الأزرار */
+.btn {
+    color: inherit !important;
+    font-weight: 500 !important;
+}
+
+.btn-primary {
+    color: #ffffff !important;
+}
+
+.btn-secondary {
+    color: #ffffff !important;
+}
+
+.btn-success {
+    color: #ffffff !important;
+}
+
+.btn-danger {
+    color: #ffffff !important;
+}
+
+.btn-warning {
+    color: #212529 !important;
+}
+
+.btn-info {
+    color: #ffffff !important;
+}
+
+/* إصلاح مشكلة النصوص في النماذج */
+.form-label {
+    color: #2c3e50 !important;
+    font-weight: 500 !important;
+}
+
+.form-control {
+    color: #2c3e50 !important;
+    font-weight: 400 !important;
+}
+
+.form-text {
+    color: #6c757d !important;
+    font-weight: 400 !important;
+}
+
+/* إصلاح مشكلة النصوص في التنبيهات */
+.alert {
+    color: #2c3e50 !important;
+}
+
+.alert-primary {
+    color: #084298 !important;
+    background-color: #cfe2ff !important;
+    border-color: #b6d4fe !important;
+}
+
+.alert-secondary {
+    color: #41464d !important;
+    background-color: #e2e3e5 !important;
+    border-color: #d3d6d8 !important;
+}
+
+.alert-success {
+    color: #0f5132 !important;
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+}
+
+.alert-danger {
+    color: #842029 !important;
+    background-color: #f8d7da !important;
+    border-color: #f5c2c7 !important;
+}
+
+.alert-warning {
+    color: #664d03 !important;
+    background-color: #fff3cd !important;
+    border-color: #ffecb5 !important;
+}
+
+.alert-info {
+    color: #055160 !important;
+    background-color: #cff4fc !important;
+    border-color: #b6effb !important;
+}
+
+/* إصلاح مشكلة النصوص في الشارات */
+.badge {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+}
+
+.badge-primary {
+    background-color: #667eea !important;
+}
+
+.badge-secondary {
+    background-color: #6c757d !important;
+}
+
+.badge-success {
+    background-color: #28a745 !important;
+}
+
+.badge-danger {
+    background-color: #dc3545 !important;
+}
+
+.badge-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.badge-info {
+    background-color: #17a2b8 !important;
+}
+
+/* إصلاح مشكلة النصوص في الروابط */
+a {
+    color: #667eea !important;
+    font-weight: 500 !important;
+}
+
+a:hover {
+    color: #5a6fd8 !important;
+    text-decoration: underline !important;
+}
+
+/* إصلاح مشكلة النصوص في القوائم */
+.list-group-item {
+    color: #2c3e50 !important;
+    font-weight: 400 !important;
+}
+
+.list-group-item.active {
+    color: #ffffff !important;
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+/* إصلاح مشكلة النصوص في التنقل */
+.nav-tabs .nav-link {
+    color: #6c757d !important;
+    font-weight: 500 !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: #667eea !important;
+    font-weight: 600 !important;
+}
+
+/* إصلاح مشكلة النصوص في الصفحات */
+.pagination .page-link {
+    color: #667eea !important;
+    font-weight: 500 !important;
+}
+
+.pagination .page-item.active .page-link {
+    color: #ffffff !important;
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
